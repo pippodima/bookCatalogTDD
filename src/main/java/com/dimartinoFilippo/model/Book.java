@@ -1,5 +1,7 @@
 package com.dimartinoFilippo.model;
 
+import java.util.Objects;
+
 public class Book {
 	
 	private String isbn;
@@ -47,6 +49,28 @@ public class Book {
 		this.publicationYear = publicationYear;
 	}
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(author, isbn, publicationYear, title);
+	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Book other = (Book) obj;
+		return publicationYear == other.publicationYear && Objects.equals(isbn, other.isbn)
+				&& Objects.equals(title, other.title) && Objects.equals(author, other.author);
+	}
+	
+	@Override
+	public String toString() {
+		return "Book [isbn=" + isbn + ", title=" + title + ", author=" + author + ", publicationYear="
+				+ publicationYear + "]";
+	}
 
 }
