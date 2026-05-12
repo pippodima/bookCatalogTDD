@@ -17,6 +17,10 @@ public class Book {
 		this.setPublicationYear(publicationYear);
 	}
 
+	public Book() {
+		super();
+	}
+
 	public String getIsbn() {
 		return isbn;
 	}
