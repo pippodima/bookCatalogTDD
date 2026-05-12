@@ -18,9 +18,9 @@
     <mockito-core-version>5.19.0</mockito-core-version>
     <mongo-java-driver-version>3.12.14</mongo-java-driver-version>
     <assertj-core-version>3.27.4</assertj-core-version>
-
-
-
+    <slf4j-api-version>2.0.17</slf4j-api-version>
+    <testcontainers-mongodb-version>1.21.0</testcontainers-mongodb-version>
+    <testcontainers-version>1.21.3</testcontainers-version>
 
   </properties>
 
@@ -46,6 +46,30 @@
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>${assertj-core-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>${testcontainers-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
+      <version>${testcontainers-mongodb-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-api-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j-api-version}</version>
       <scope>test</scope>
     </dependency>
 
