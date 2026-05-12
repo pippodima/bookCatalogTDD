@@ -1,5 +1,7 @@
 package com.dimartinoFilippo.model;
 
+import java.util.Objects;
+
 public class Author {
 	
 	private String id;
@@ -37,5 +39,26 @@ public class Author {
 		this.lastName = lastName;
 	}
 
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, id, lastName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Author other = (Author) obj;
+		return Objects.equals(id, other.id) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(lastName, other.lastName);
+	}
+
+	@Override
+	public String toString() {
+		return "Author [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
 }
