@@ -1,7 +1,5 @@
 package com.dimartinoFilippo.controller;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -53,6 +51,3 @@ public class BookControllerTest {
 	}
 
 }
-
-
-// TODO : scrivere failing test findall e implementare automaticamente il resto
