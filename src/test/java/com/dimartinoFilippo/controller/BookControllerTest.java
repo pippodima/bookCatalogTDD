@@ -18,6 +18,8 @@ import com.dimartinoFilippo.repository.BookRepository;
 import com.dimartinoFilippo.view.LibraryView;
 
 public class BookControllerTest {
+	
+	private static final Book TEST_BOOK = new Book();
 
 	@Mock
 	private BookRepository bookRepository;
@@ -44,10 +46,12 @@ public class BookControllerTest {
 	
 	@Test
 	public void testFindAllBooks() {
-		List<Book> books = Arrays.asList(new Book());
+		List<Book> books = Arrays.asList(TEST_BOOK);
 		when(bookRepository.findAll()).thenReturn(books);
 		bookController.findAllBooks();
 		verify(libraryView).showAllBooks(books);
 	}
+	
+	
 
 }
