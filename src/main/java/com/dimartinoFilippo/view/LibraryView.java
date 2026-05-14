@@ -17,4 +17,6 @@ public interface LibraryView {
 
 	void bookRemoved(Book bookToRemove);
 
+	void showErrorBookDoesNotExist(String errorMessage, Book notExistingBook);
+
 }

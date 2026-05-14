@@ -101,4 +101,14 @@ public class BookControllerTest {
 	}
 	
 	
+	@Test
+	public void testDeleteBookWhenBookDoesNotExist() {
+		when(bookRepository.findByIsbn("1234")).thenReturn(null);
+		
+		bookController.deleteBook(TEST_BOOK);
+		
+		verify(libraryView).showErrorBookDoesNotExist("The selected book does not exist", TEST_BOOK);
+	}
+	
+	
 }
