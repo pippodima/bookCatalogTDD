@@ -48,6 +48,11 @@ public class BookController {
 
 
 	public void deleteBook(Book bookToDelete) {
+		Book existingBook = bookRepository.findByIsbn(bookToDelete.getIsbn());
+		if (existingBook == null) {
+			libraryView.showErrorBookDoesNotExist("The selected book does not exist", bookToDelete);
+			return;
+		}
 		bookRepository.delete(bookToDelete);
 		libraryView.bookRemoved(bookToDelete);
 		
