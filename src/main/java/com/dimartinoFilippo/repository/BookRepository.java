@@ -12,6 +12,6 @@ public interface BookRepository {
 
 	void save(Book bookToAdd);
 
-	Object delete(Book bookToDelete);
+	void delete(Book bookToDelete);
 
 }
