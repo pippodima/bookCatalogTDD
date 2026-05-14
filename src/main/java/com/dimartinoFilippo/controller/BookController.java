@@ -48,7 +48,8 @@ public class BookController {
 
 
 	public void deleteBook(Book bookToDelete) {
-		// TODO Auto-generated method stub
+		bookRepository.delete(bookToDelete);
+		libraryView.bookRemoved(bookToDelete);
 		
 	}
 
