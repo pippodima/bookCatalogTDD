@@ -8,4 +8,6 @@ public interface LibraryView {
 
 	void showAllBooks(List<Book> books);
 
+	void newBookAdded(Book bookToAdd);
+
 }

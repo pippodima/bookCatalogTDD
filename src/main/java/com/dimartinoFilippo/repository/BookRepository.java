@@ -8,4 +8,8 @@ public interface BookRepository {
 
 	List<Book> findAll();
 
+	Book findByIsbn(String isbn);
+
+	void save(Book bookToAdd);
+
 }

@@ -13,19 +13,25 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.dimartinoFilippo.model.Author;
 import com.dimartinoFilippo.model.Book;
+import com.dimartinoFilippo.repository.AuthorRepository;
 import com.dimartinoFilippo.repository.BookRepository;
 import com.dimartinoFilippo.view.LibraryView;
 
 public class BookControllerTest {
 	
-	private static final Book TEST_BOOK = new Book();
+	private static final Author TEST_AUTHOR = new Author("a1", "Italo", "Calvino");
+	private static final Book TEST_BOOK = new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
 
 	@Mock
 	private BookRepository bookRepository;
 	
 	@Mock
 	private LibraryView libraryView;
+	
+	@Mock
+	private AuthorRepository authorRepository;
 	
 	@InjectMocks
 	private BookController bookController;
@@ -52,6 +58,14 @@ public class BookControllerTest {
 		verify(libraryView).showAllBooks(books);
 	}
 	
-	
-
+	@Test
+	public void testAddNewBookWhenIsbnIsAvailableAndAuthorExist() {
+		when(bookRepository.findByIsbn("1234")).thenReturn(null);
+		when(authorRepository.findById("a1")).thenReturn(TEST_AUTHOR);
+		
+		bookController.addNewBook(TEST_BOOK);
+		
+		verify(bookRepository).save(TEST_BOOK);
+		verify(libraryView).newBookAdded(TEST_BOOK);
+	}
 }

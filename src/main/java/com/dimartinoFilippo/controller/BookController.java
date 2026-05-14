@@ -1,5 +1,6 @@
 package com.dimartinoFilippo.controller;
 
+import com.dimartinoFilippo.model.Book;
 import com.dimartinoFilippo.repository.BookRepository;
 import com.dimartinoFilippo.view.LibraryView;
 
@@ -18,6 +19,14 @@ public class BookController {
 
 	public void findAllBooks() {
 		libraryView.showAllBooks(bookRepository.findAll());		
+	}
+
+
+
+
+	public void addNewBook(Book testBook) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
