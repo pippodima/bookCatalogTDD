@@ -73,11 +73,22 @@ public class BookControllerTest {
 	@Test
 	public void testAddNewBookWhenIsbnAlreadyExist() {
 		when(bookRepository.findByIsbn("1234")).thenReturn(TEST_BOOK);
+		
+		bookController.addNewBook(TEST_BOOK);
+		
+		verify(libraryView).showErrorBookAlreadyExists("The selected ISBN 1234 is already in use", TEST_BOOK);
+		verifyNoInteractions(authorRepository);
+	}
+	
+	@Test
+	public void testAddNewBookWhenAuthorDoesNotExist() {
+		when(bookRepository.findByIsbn("1234")).thenReturn(null);
+		when(authorRepository.findById("a1")).thenReturn(null);
+		
 	
 		bookController.addNewBook(TEST_BOOK);
 
-		verify(libraryView).showErrorBookAlreadyExists("The selected ISBN 1234 is already in use", TEST_BOOK);
-		verifyNoInteractions(authorRepository);
+		verify(libraryView).showErrorAuthorDoesNotExist("The selected author does not exist", TEST_AUTHOR);
 	}
 	
 	
