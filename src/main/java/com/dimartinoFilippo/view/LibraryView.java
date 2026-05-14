@@ -10,4 +10,6 @@ public interface LibraryView {
 
 	void newBookAdded(Book bookToAdd);
 
+	void showErrorBookAlreadyExists(String errorMessage, Book existingBook);
+
 }
