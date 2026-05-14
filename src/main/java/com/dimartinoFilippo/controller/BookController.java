@@ -24,9 +24,14 @@ public class BookController {
 
 
 
-	public void addNewBook(Book testBook) {
-		bookRepository.save(testBook);
-		libraryView.newBookAdded(testBook);
+	public void addNewBook(Book bookToAdd) {
+		Book existingBook = bookRepository.findByIsbn(bookToAdd.getIsbn());
+		if (existingBook != null) {
+			libraryView.showErrorBookAlreadyExists("The selected ISBN " + bookToAdd.getIsbn() + " is already in use", existingBook);
+			return;
+		}
+		bookRepository.save(bookToAdd);
+		libraryView.newBookAdded(bookToAdd);
 		
 	}
 
