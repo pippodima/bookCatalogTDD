@@ -84,13 +84,21 @@ public class BookControllerTest {
 	public void testAddNewBookWhenAuthorDoesNotExist() {
 		when(bookRepository.findByIsbn("1234")).thenReturn(null);
 		when(authorRepository.findById("a1")).thenReturn(null);
-		
 	
 		bookController.addNewBook(TEST_BOOK);
 
 		verify(libraryView).showErrorAuthorDoesNotExist("The selected author does not exist", TEST_AUTHOR);
 	}
 	
+	@Test
+	public void testDeleteBookWhenBookExist() {
+		when(bookRepository.findByIsbn("1234")).thenReturn(TEST_BOOK);
+		
+		bookController.deleteBook(TEST_BOOK);
+		
+		verify(bookRepository.delete(TEST_BOOK));
+		verify(libraryView.bookRemoved(TEST_BOOK));
+	}
 	
 	
 }

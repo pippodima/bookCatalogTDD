@@ -15,4 +15,6 @@ public interface LibraryView {
 
 	void showErrorAuthorDoesNotExist(String errorMessage, Author notExistigAuthor);
 
+	Object bookRemoved(Book bookToRemove);
+
 }
