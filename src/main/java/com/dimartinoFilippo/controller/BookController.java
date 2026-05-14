@@ -25,7 +25,8 @@ public class BookController {
 
 
 	public void addNewBook(Book testBook) {
-		// TODO Auto-generated method stub
+		bookRepository.save(testBook);
+		libraryView.newBookAdded(testBook);
 		
 	}
 
