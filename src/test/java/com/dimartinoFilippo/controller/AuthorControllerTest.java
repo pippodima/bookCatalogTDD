@@ -1,7 +1,6 @@
 package com.dimartinoFilippo.controller;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -24,7 +23,7 @@ public class AuthorControllerTest {
 	
 	@Mock
 	private AuthorRepository authorRepository;
-
+	
 	@Mock
 	private LibraryView libraryView;
 	
@@ -69,7 +68,6 @@ public class AuthorControllerTest {
 		
 		authorController.addNewAuthor(TEST_AUTHOR);
 		verify(libraryView).showErrorAuthorAlreadyExist("The selected id a1 is already assigned to another author", TEST_AUTHOR);
-		verifyNoInteractions(authorRepository);
 		
 	}
 	

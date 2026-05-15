@@ -20,9 +20,14 @@ public class AuthorController {
 		
 	}
 
-	public void addNewAuthor(Author newAuthor) {
-		authorRepository.save(newAuthor);
-		libraryView.newAuthorAdded(newAuthor);
+	public void addNewAuthor(Author authorToAdd) {
+		Author existingAuthor = authorRepository.findById(authorToAdd.getId());
+		if (existingAuthor != null) {
+			libraryView.showErrorAuthorAlreadyExist("The selected id " + authorToAdd.getId() + " is already assigned to another author", existingAuthor);
+			return;
+		}
+		authorRepository.save(authorToAdd);
+		libraryView.newAuthorAdded(authorToAdd);
 		
 	}
 
