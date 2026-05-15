@@ -6,9 +6,12 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.dimartinoFilippo.model.Author;
 import com.dimartinoFilippo.repository.AuthorRepository;
@@ -26,6 +29,19 @@ public class AuthorControllerTest {
 	
 	@InjectMocks
 	private AuthorController authorController;
+	
+	private AutoCloseable closeable;
+	
+	@Before
+	public void setUp() {
+		closeable = MockitoAnnotations.openMocks(this);
+	}
+	
+	@After
+	public void releaseMocks() throws Exception {
+		closeable.close();
+	}
+
 
 	@Test
 	public void testFindAllAuthors() {
