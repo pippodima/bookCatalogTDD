@@ -32,7 +32,8 @@ public class AuthorController {
 	}
 
 	public void deleteAuthor(Author authorToDelete) {
-		// TODO Auto-generated method stub
+		authorRepository.delete(authorToDelete);
+		libraryView.authorRemoved(authorToDelete);
 		
 	}
 
