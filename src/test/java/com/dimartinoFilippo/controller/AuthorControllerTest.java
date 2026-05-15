@@ -1,14 +1,39 @@
 package com.dimartinoFilippo.controller;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+import com.dimartinoFilippo.model.Author;
+import com.dimartinoFilippo.repository.AuthorRepository;
+import com.dimartinoFilippo.view.LibraryView;
 
 public class AuthorControllerTest {
+	
+	private static final Author TEST_AUTHOR = new Author("a1", "Italo", "Calvino");
+	
+	@Mock
+	private AuthorRepository authorRepository;
+
+	@Mock
+	private LibraryView libraryView;
+	
+	@InjectMocks
+	private AuthorController authorController;
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testFindAllAuthors() {
+		List<Author> authors = Arrays.asList(TEST_AUTHOR);
+		when(authorRepository.findAll()).thenReturn(authors);
+		authorController.findAllAuthors();
+		verify(libraryView).showAllAuthors(authors);
+		
 	}
 
 }

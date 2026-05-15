@@ -19,4 +19,6 @@ public interface LibraryView {
 
 	void showErrorBookDoesNotExist(String errorMessage, Book notExistingBook);
 
+	void showAllAuthors(List<Author> authors);
+
 }
