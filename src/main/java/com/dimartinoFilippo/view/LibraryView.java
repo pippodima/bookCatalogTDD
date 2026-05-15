@@ -25,4 +25,6 @@ public interface LibraryView {
 
 	void showErrorAuthorAlreadyExist(String errorMessage, Author existingAuthor);
 
+	void authorRemoved(Author authorToRemove);
+
 }

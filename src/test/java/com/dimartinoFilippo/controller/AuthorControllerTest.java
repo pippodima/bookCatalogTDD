@@ -70,6 +70,17 @@ public class AuthorControllerTest {
 		verify(libraryView).showErrorAuthorAlreadyExist("The selected id a1 is already assigned to another author", TEST_AUTHOR);
 		
 	}
+
+	@Test
+	public void testDeleteAuthorWhenExistAndThereIsNoRelatedBooks() {
+		when(authorRepository.findById("a1")).thenReturn(TEST_AUTHOR);
+		
+		authorController.deleteAuthor(TEST_AUTHOR);
+		
+		verify(authorRepository).delete(TEST_AUTHOR);
+		verify(libraryView).authorRemoved(TEST_AUTHOR);
+		
+	}
 	
 	
 
