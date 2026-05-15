@@ -1,6 +1,7 @@
 package com.dimartinoFilippo.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public class AuthorControllerTest {
 		verify(libraryView).showAllAuthors(authors);
 		
 	}
-
+	
 	@Test
 	public void testAddNewAuthorWhenIdIsAvailable() {
 		when(authorRepository.findById("a1")).thenReturn(null);
@@ -59,6 +60,16 @@ public class AuthorControllerTest {
 		authorController.addNewAuthor(TEST_AUTHOR);
 		verify(authorRepository).save(TEST_AUTHOR);
 		verify(libraryView).newAuthorAdded(TEST_AUTHOR);
+		
+	}
+
+	@Test
+	public void testAddNewAuthorWhenIdAlreadyExist() {
+		when(authorRepository.findById("a1")).thenReturn(TEST_AUTHOR);
+		
+		authorController.addNewAuthor(TEST_AUTHOR);
+		verify(libraryView).showErrorAuthorAlreadyExist("The selected id a1 is already assigned to another author", TEST_AUTHOR);
+		verifyNoInteractions(authorRepository);
 		
 	}
 	

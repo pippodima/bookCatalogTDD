@@ -23,4 +23,6 @@ public interface LibraryView {
 
 	void newAuthorAdded(Author authorToAdd);
 
+	void showErrorAuthorAlreadyExist(String errorMessage, Author existingAuthor);
+
 }
