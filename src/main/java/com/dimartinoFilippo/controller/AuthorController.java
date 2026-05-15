@@ -21,7 +21,8 @@ public class AuthorController {
 	}
 
 	public void addNewAuthor(Author newAuthor) {
-		// TODO Auto-generated method stub
+		authorRepository.save(newAuthor);
+		libraryView.newAuthorAdded(newAuthor);
 		
 	}
 
