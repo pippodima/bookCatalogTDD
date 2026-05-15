@@ -1,5 +1,6 @@
 package com.dimartinoFilippo.controller;
 
+import com.dimartinoFilippo.model.Author;
 import com.dimartinoFilippo.repository.AuthorRepository;
 import com.dimartinoFilippo.view.LibraryView;
 
@@ -16,6 +17,11 @@ public class AuthorController {
 
 	public void findAllAuthors() {
 		libraryView.showAllAuthors(authorRepository.findAll());
+		
+	}
+
+	public void addNewAuthor(Author newAuthor) {
+		// TODO Auto-generated method stub
 		
 	}
 

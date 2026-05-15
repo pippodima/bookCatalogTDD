@@ -21,4 +21,6 @@ public interface LibraryView {
 
 	void showAllAuthors(List<Author> authors);
 
+	void newAuthorAdded(Author authorToAdd);
+
 }

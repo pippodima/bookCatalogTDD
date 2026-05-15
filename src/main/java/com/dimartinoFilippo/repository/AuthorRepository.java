@@ -10,4 +10,6 @@ public interface AuthorRepository {
 
 	List<Author> findAll();
 
+	void save(Author newAuthor);
+
 }

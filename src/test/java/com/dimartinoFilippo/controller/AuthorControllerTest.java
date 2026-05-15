@@ -42,7 +42,7 @@ public class AuthorControllerTest {
 		closeable.close();
 	}
 
-
+	
 	@Test
 	public void testFindAllAuthors() {
 		List<Author> authors = Arrays.asList(TEST_AUTHOR);
@@ -51,5 +51,17 @@ public class AuthorControllerTest {
 		verify(libraryView).showAllAuthors(authors);
 		
 	}
+
+	@Test
+	public void testAddNewAuthorWhenIdIsAvailable() {
+		when(authorRepository.findById("a1")).thenReturn(null);
+		
+		authorController.addNewAuthor(TEST_AUTHOR);
+		verify(authorRepository).save(TEST_AUTHOR);
+		verify(libraryView).newAuthorAdded(TEST_AUTHOR);
+		
+	}
+	
+	
 
 }
