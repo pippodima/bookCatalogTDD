@@ -14,4 +14,6 @@ public interface BookRepository {
 
 	void delete(Book bookToDelete);
 
+	List<Book> findByAuthor(String authorId);
+
 }
