@@ -21,6 +21,7 @@
     <slf4j-api-version>2.0.17</slf4j-api-version>
     <testcontainers-mongodb-version>1.21.0</testcontainers-mongodb-version>
     <testcontainers-version>1.21.3</testcontainers-version>
+    <jacoco-maven-plugin-version>0.8.13</jacoco-maven-plugin-version>
 
   </properties>
 
@@ -75,4 +76,28 @@
 
 
   </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin-version}</version>
+          <configuration>
+            <excludes>
+              <exclude>**/model/*.*</exclude>
+            </excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>prepare-agent</goal>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>
