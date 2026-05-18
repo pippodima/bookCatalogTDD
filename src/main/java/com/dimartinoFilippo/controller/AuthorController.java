@@ -39,6 +39,11 @@ public class AuthorController {
 	}
 
 	public void deleteAuthor(Author authorToDelete) {
+		Author existingAuthor = authorRepository.findById(authorToDelete.getId());
+		if (existingAuthor == null) {
+			libraryView.showErrorAuthorDoesNotExist("The selected id " + authorToDelete.getId() + " is not associated with any author", authorToDelete);
+			return;
+		}
 		List<Book> authorsBooks = bookRepository.findByAuthor(authorToDelete.getId());
 		for (Book book : authorsBooks) {
 			bookRepository.delete(book);
