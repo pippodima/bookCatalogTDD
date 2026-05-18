@@ -107,5 +107,15 @@ public class AuthorControllerTest {
 		verify(libraryView).authorRemoved(TEST_AUTHOR);
 	}
 	
+	@Test
+	public void testDeleteAuthorWhenItDoesNotExist() {
+		when(authorRepository.findById("a1")).thenReturn(null);
+		
+		authorController.deleteAuthor(TEST_AUTHOR);
+		
+		verify(libraryView).showErrorAuthorDoesNotExist("The selected id a1 is not associated with any author", TEST_AUTHOR);
+		
+	}
+	
 
 }
