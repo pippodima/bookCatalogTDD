@@ -103,6 +103,12 @@
           <artifactId>pitest-maven</artifactId>
           <version>${pit-maven-plugin-version}</version>
           <configuration>
+            <targetClasses>
+              <param>com.dimartinoFilippo.controller*</param>
+            </targetClasses>
+            <targetTests>
+              <param>com.dimartinoFilippo.controller*</param>
+            </targetTests>
             <mutators>DEFAULTS</mutators>
           </configuration>
         </plugin>
