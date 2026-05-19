@@ -7,6 +7,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - java: 17
+            additional-maven-args: "-Pjacoco"
+          - java: 21
 
     steps:
       - name: Check out repository
@@ -20,4 +26,4 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -Pjacoco clean verify --file bookCatalog/pom.xml
+        run: mvn clean verify --file bookCatalog/pom.xml
