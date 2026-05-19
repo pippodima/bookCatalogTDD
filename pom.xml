@@ -22,6 +22,7 @@
     <testcontainers-mongodb-version>1.21.0</testcontainers-mongodb-version>
     <testcontainers-version>1.21.3</testcontainers-version>
     <jacoco-maven-plugin-version>0.8.13</jacoco-maven-plugin-version>
+    <pit-maven-plugin-version>1.19.1</pit-maven-plugin-version>
 
   </properties>
 
@@ -96,6 +97,14 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.pitest</groupId>
+          <artifactId>pitest-maven</artifactId>
+          <version>${pit-maven-plugin-version}</version>
+          <configuration>
+            <mutators>DEFAULTS</mutators>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
