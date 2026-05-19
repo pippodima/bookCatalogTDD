@@ -20,4 +20,4 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn clean verify --file bookCatalog/pom.xml
+        run: mvn -Pjacoco clean verify --file bookCatalog/pom.xml
