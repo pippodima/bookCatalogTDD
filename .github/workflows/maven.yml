@@ -11,7 +11,7 @@ jobs:
       matrix:
         include:
           - java: 17
-            additional-maven-args: "-Pjacoco"
+            additional-maven-args: "-Pjacoco org.pitest:pitest-maven:mutationCoverage"
           - java: 21
 
     steps:
