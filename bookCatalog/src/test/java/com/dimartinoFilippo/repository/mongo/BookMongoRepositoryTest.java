@@ -1,6 +1,6 @@
 package com.dimartinoFilippo.repository.mongo;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.DB_NAME;
 import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.BOOK;
 
@@ -57,8 +57,8 @@ public class BookMongoRepositoryTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testFindAllWhenDatabaseIsEmpty() {
+		assertThat(bookRepository.findAll()).isEmpty();
 	}
 
 }
