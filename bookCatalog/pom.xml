@@ -23,6 +23,7 @@
     <testcontainers-version>1.21.3</testcontainers-version>
     <jacoco-maven-plugin-version>0.8.13</jacoco-maven-plugin-version>
     <pit-maven-plugin-version>1.19.1</pit-maven-plugin-version>
+    <coverall-plugin-version>5.0.0</coverall-plugin-version>
 
   </properties>
 
@@ -89,14 +90,6 @@
               <exclude>**/model/*.*</exclude>
             </excludes>
           </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>prepare-agent</goal>
-                <goal>report</goal>
-              </goals>
-            </execution>
-          </executions>
         </plugin>
         <plugin>
           <groupId>org.pitest</groupId>
@@ -112,6 +105,14 @@
             <mutators>DEFAULTS</mutators>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>com.github.hazendaz.maven</groupId>
+          <artifactId>coveralls-maven-plugin</artifactId>
+          <version>${coverall-plugin-version}</version>
+          <configuration>
+            <repoToken>${env.COVERALLS_REPO_TOKEN}</repoToken>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -124,6 +125,34 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>report</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.github.hazendaz.maven</groupId>
+            <artifactId>coveralls-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>coveralls-report</id>
+                <phase>verify</phase>
+                <goals>
+                <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
