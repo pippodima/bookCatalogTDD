@@ -6,7 +6,7 @@ import org.bson.Document;
 
 import com.dimartinoFilippo.model.Book;
 import com.dimartinoFilippo.repository.BookRepository;
-import com.mongodb.client.MongoClient;
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 
 public class BookMongoRepository implements BookRepository{
