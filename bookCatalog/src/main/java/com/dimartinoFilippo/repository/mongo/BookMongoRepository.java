@@ -1,10 +1,12 @@
 package com.dimartinoFilippo.repository.mongo;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.bson.Document;
 
+import com.dimartinoFilippo.model.Author;
 import com.dimartinoFilippo.model.Book;
 import com.dimartinoFilippo.repository.BookRepository;
 import com.mongodb.MongoClient;
@@ -25,7 +27,10 @@ public class BookMongoRepository implements BookRepository{
 	
 	@Override
 	public List<Book> findAll() {
-		return Collections.emptyList();
+		return StreamSupport.
+				stream(collection.find().spliterator(), false)
+				.map(this::fromDocumentToBook)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -52,4 +57,17 @@ public class BookMongoRepository implements BookRepository{
 		return null;
 	}
 
-}
+	private Book fromDocumentToBook(Document d) {
+	    Document authorDoc = (Document) d.get("author");
+	    Author author = new Author(
+	        authorDoc.getString("id"),
+	        authorDoc.getString("firstName"),
+	        authorDoc.getString("lastName")
+	    );
+	    return new Book(
+	        d.getString("isbn"),
+	        d.getString("title"),
+	        author,
+	        d.getInteger("publicationYear")
+	    );
+	}}
