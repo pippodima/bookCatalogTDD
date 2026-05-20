@@ -1,5 +1,6 @@
 package com.dimartinoFilippo.repository.mongo;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.Document;
@@ -24,8 +25,7 @@ public class BookMongoRepository implements BookRepository{
 	
 	@Override
 	public List<Book> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
