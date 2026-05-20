@@ -2,11 +2,26 @@ package com.dimartinoFilippo.repository.mongo;
 
 import java.util.List;
 
+import org.bson.Document;
+
 import com.dimartinoFilippo.model.Book;
 import com.dimartinoFilippo.repository.BookRepository;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
 
 public class BookMongoRepository implements BookRepository{
 
+	private static final String DB_NAME = "books";
+	private static final String BOOK = "book";
+
+	private MongoCollection<Document> collection;
+	
+	public BookMongoRepository (MongoClient client) {
+		collection = client
+				.getDatabase(DB_NAME)
+				.getCollection(BOOK);
+	}
+	
 	@Override
 	public List<Book> findAll() {
 		// TODO Auto-generated method stub
