@@ -1,6 +1,5 @@
 package com.dimartinoFilippo.repository.mongo;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -57,7 +56,10 @@ public class BookMongoRepository implements BookRepository{
 
 	@Override
 	public List<Book> findByAuthor(String authorId) {
-		return Collections.emptyList();
+		return StreamSupport
+				.stream(collection.find(Filters.eq("author.id", authorId)).spliterator(), false)
+				.map(this::fromDocumentToBook)
+				.collect(Collectors.toList());
 	}
 
 	private Book fromDocumentToBook(Document d) {
