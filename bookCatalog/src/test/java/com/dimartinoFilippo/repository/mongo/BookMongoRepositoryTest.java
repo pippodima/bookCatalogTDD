@@ -28,6 +28,8 @@ import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
 public class BookMongoRepositoryTest {
 	
 	private static final Author TEST_AUTHOR = new Author("a1", "Italo", "Calvino");
+	private static final Book TEST_BOOK_1 = new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
+	private static final Book TEST_BOOK_2 = new Book("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952);
 
 	
 	private static MongoServer server;
@@ -70,25 +72,22 @@ public class BookMongoRepositoryTest {
 
 	@Test
 	public void testFindAllWhenDatabaseIsNotEmpty() {
-		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
-		addTestBookToDatabase("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952);
+		addTestBookToDatabase(TEST_BOOK_1);
+		addTestBookToDatabase(TEST_BOOK_2);
 		
-		assertThat(bookRepository.findAll()).containsExactly(
-				new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957),
-				new Book("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952)
-				);
+		assertThat(bookRepository.findAll()).containsExactly(TEST_BOOK_1, TEST_BOOK_2);
 	}
 
-	private void addTestBookToDatabase(String isbn, String title, Author author, int publicationYear) {
+	private void addTestBookToDatabase(Book book) {
 		collection.insertOne(new Document()
-				.append("isbn", isbn)
-				.append("title", title)
+				.append("isbn", book.getIsbn())
+				.append("title", book.getTitle())
 				.append("author", new Document()
-						.append("id", author.getId())
-						.append("firstName", author.getFirstName())
-						.append("lastName", author.getLastName())
+						.append("id", book.getAuthor().getId())
+						.append("firstName", book.getAuthor().getFirstName())
+						.append("lastName", book.getAuthor().getLastName())
 						)
-				.append("publicationYear", publicationYear));
+				.append("publicationYear", book.getPublicationYear()));
 	}
 	
 	@Test
@@ -98,24 +97,22 @@ public class BookMongoRepositoryTest {
 	
 	@Test
 	public void testFindByIsbnWhenIsbnIsPresent() {
-		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
-		addTestBookToDatabase("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952);
-		assertThat(bookRepository.findByIsbn("12345")).isEqualTo(
-				new Book("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952));
+		addTestBookToDatabase(TEST_BOOK_1);
+		addTestBookToDatabase(TEST_BOOK_2);
+		assertThat(bookRepository.findByIsbn("12345")).isEqualTo(TEST_BOOK_2);
 	}
 	
 	@Test
 	public void testSave() {
-		Book book = new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
-		bookRepository.save(book);
-		assertThat(readAllBooksFromDatabase()).containsExactly(book);
+		bookRepository.save(TEST_BOOK_1);
+		assertThat(readAllBooksFromDatabase()).containsExactly(TEST_BOOK_1);
 	}
 	
 	
 	@Test
 	public void testDelete() {
-		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
-		bookRepository.delete("1234");
+		addTestBookToDatabase(TEST_BOOK_1);
+		bookRepository.delete(TEST_BOOK_1.getIsbn());
 		assertThat(readAllBooksFromDatabase()).isEmpty();
 	}
 	
@@ -142,7 +139,7 @@ public class BookMongoRepositoryTest {
 	
 	@Test
 	public void testFindBooksByAuthorWhenThereAreNoBooksRelated() {
-		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
+		addTestBookToDatabase(TEST_BOOK_1);
 		assertThat(bookRepository.findByAuthor("b2")).isEmpty();;
 		
 	}
@@ -150,11 +147,8 @@ public class BookMongoRepositoryTest {
 	
 	@Test
 	public void testFindBooksByAuthorWhenThereAreBooksRelated() {
-		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
-		addTestBookToDatabase("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952);
-		assertThat(bookRepository.findByAuthor("a1")).containsExactly(
-				new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957),
-				new Book("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952));
-
+		addTestBookToDatabase(TEST_BOOK_1);
+		addTestBookToDatabase(TEST_BOOK_2);
+		assertThat(bookRepository.findByAuthor("a1")).containsExactly(TEST_BOOK_1, TEST_BOOK_2);
 	}
 }
