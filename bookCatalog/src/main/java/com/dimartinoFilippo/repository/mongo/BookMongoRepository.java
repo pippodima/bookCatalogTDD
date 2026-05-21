@@ -50,7 +50,7 @@ public class BookMongoRepository implements BookRepository{
 
 	@Override
 	public void delete(String isbnOfbookToDelete) {
-		// TODO Auto-generated method stub
+		collection.deleteOne(Filters.eq("isbn", isbnOfbookToDelete));
 		
 	}
 
