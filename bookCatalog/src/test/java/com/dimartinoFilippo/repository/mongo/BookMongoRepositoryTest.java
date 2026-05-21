@@ -140,4 +140,11 @@ public class BookMongoRepositoryTest {
 				.collect(Collectors.toList());
 	}
 	
+	@Test
+	public void testFindBooksByAuthorWhenThereAreNoBooksRelated() {
+		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
+		assertThat(bookRepository.findByAuthor("b2")).isEmpty();;
+		
+	}
+
 }
