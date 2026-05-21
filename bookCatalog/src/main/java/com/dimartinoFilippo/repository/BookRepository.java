@@ -12,7 +12,7 @@ public interface BookRepository {
 
 	void save(Book bookToAdd);
 
-	void delete(Book bookToDelete);
+	void delete(String isbnOfbookToDelete);
 
 	List<Book> findByAuthor(String authorId);
 

@@ -49,7 +49,7 @@ public class BookMongoRepository implements BookRepository{
 	}
 
 	@Override
-	public void delete(Book bookToDelete) {
+	public void delete(String isbnOfbookToDelete) {
 		// TODO Auto-generated method stub
 		
 	}
