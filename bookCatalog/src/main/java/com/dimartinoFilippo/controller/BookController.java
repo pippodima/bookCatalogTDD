@@ -53,7 +53,7 @@ public class BookController {
 			libraryView.showErrorBookDoesNotExist("The selected book does not exist", bookToDelete);
 			return;
 		}
-		bookRepository.delete(bookToDelete);
+		bookRepository.delete(bookToDelete.getIsbn());
 		libraryView.bookRemoved(bookToDelete);
 		
 	}

@@ -96,7 +96,7 @@ public class BookControllerTest {
 		
 		bookController.deleteBook(TEST_BOOK);
 		
-		verify(bookRepository).delete(TEST_BOOK);
+		verify(bookRepository).delete(TEST_BOOK.getIsbn());
 		verify(libraryView).bookRemoved(TEST_BOOK);
 	}
 	

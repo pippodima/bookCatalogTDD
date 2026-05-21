@@ -46,7 +46,7 @@ public class AuthorController {
 		}
 		List<Book> authorsBooks = bookRepository.findByAuthor(authorToDelete.getId());
 		for (Book book : authorsBooks) {
-			bookRepository.delete(book);
+			bookRepository.delete(book.getIsbn());
 			libraryView.bookRemoved(book);
 		}
 		authorRepository.delete(authorToDelete);
