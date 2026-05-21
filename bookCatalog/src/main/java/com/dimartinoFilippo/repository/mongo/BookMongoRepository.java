@@ -45,8 +45,7 @@ public class BookMongoRepository implements BookRepository{
 
 	@Override
 	public void save(Book bookToAdd) {
-		// TODO Auto-generated method stub
-		
+		collection.insertOne(fromBookToDocument(bookToAdd));
 	}
 
 	@Override
@@ -62,16 +61,30 @@ public class BookMongoRepository implements BookRepository{
 	}
 
 	private Book fromDocumentToBook(Document d) {
-	    Document authorDoc = (Document) d.get("author");
-	    Author author = new Author(
-	        authorDoc.getString("id"),
-	        authorDoc.getString("firstName"),
-	        authorDoc.getString("lastName")
-	    );
-	    return new Book(
-	        d.getString("isbn"),
-	        d.getString("title"),
-	        author,
-	        d.getInteger("publicationYear")
-	    );
-	}}
+		Document authorDoc = (Document) d.get("author");
+		Author author = new Author(
+				authorDoc.getString("id"),
+				authorDoc.getString("firstName"),
+				authorDoc.getString("lastName")
+				);
+		return new Book(
+				d.getString("isbn"),
+				d.getString("title"),
+				author,
+				d.getInteger("publicationYear")
+				);
+}
+	
+	private Document fromBookToDocument(Book book) {
+		return new Document()
+				.append("isbn", book.getIsbn())
+				.append("title", book.getTitle())
+				.append("author", new Document()
+						.append("id", book.getAuthor().getId())
+						.append("firstName", book.getAuthor().getFirstName())
+						.append("lastName", book.getAuthor().getLastName())
+						)
+				.append("publicationYear", book.getPublicationYear());
+		}
+	
+}
