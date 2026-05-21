@@ -11,6 +11,7 @@ import com.dimartinoFilippo.model.Book;
 import com.dimartinoFilippo.repository.BookRepository;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 public class BookMongoRepository implements BookRepository{
 
@@ -35,7 +36,10 @@ public class BookMongoRepository implements BookRepository{
 
 	@Override
 	public Book findByIsbn(String isbn) {
-		// TODO Auto-generated method stub
+		Document d = collection.find(Filters.eq("isbn", isbn)).first();
+		if (d != null) {
+			return fromDocumentToBook(d);
+		}
 		return null;
 	}
 
