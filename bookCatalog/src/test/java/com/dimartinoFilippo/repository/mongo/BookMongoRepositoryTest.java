@@ -147,4 +147,14 @@ public class BookMongoRepositoryTest {
 		
 	}
 
+	
+	@Test
+	public void testFindBooksByAuthorWhenThereAreBooksRelated() {
+		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
+		addTestBookToDatabase("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952);
+		assertThat(bookRepository.findByAuthor("a1")).containsExactly(
+				new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957),
+				new Book("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952));
+
+	}
 }
