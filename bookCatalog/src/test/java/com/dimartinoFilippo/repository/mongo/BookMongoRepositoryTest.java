@@ -15,8 +15,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.validator.PublicClassValidator;
-
 import com.mongodb.ServerAddress;
 import com.dimartinoFilippo.model.Author;
 import com.dimartinoFilippo.model.Book;
@@ -111,6 +109,14 @@ public class BookMongoRepositoryTest {
 		Book book = new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
 		bookRepository.save(book);
 		assertThat(readAllBooksFromDatabase()).containsExactly(book);
+	}
+	
+	
+	@Test
+	public void testDelete() {
+		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
+		bookRepository.delete("1234");
+		assertThat(readAllBooksFromDatabase()).isEmpty();
 	}
 	
 	
