@@ -14,8 +14,8 @@ import com.mongodb.client.MongoCollection;
 
 public class BookMongoRepository implements BookRepository{
 
-	public static final String DB_NAME = "books";
-	public static final String BOOK = "book";
+	public static final String DB_NAME = "library";
+	public static final String BOOK = "books";
 
 	private MongoCollection<Document> collection;
 	
