@@ -88,4 +88,19 @@ public class BookMongoRepositoryTest {
 						)
 				.append("publicationYear", publicationYear));
 	}
+	
+	@Test
+	public void testFindByIsbnWhenIsbnIsNotPresent() {
+		assertThat(bookRepository.findByIsbn("id-not-present")).isNull();
+	}
+	
+	@Test
+	public void testFindByIsbnWhenIsbnIsPresent() {
+		addTestBookToDatabase("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
+		addTestBookToDatabase("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952);
+		assertThat(bookRepository.findByIsbn("12345")).isEqualTo(
+				new Book("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952));
+	}
+	
+	
 }
