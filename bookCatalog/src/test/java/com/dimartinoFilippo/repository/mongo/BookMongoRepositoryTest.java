@@ -5,6 +5,9 @@ import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.DB_NAME;
 import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.BOOK;
 
 import java.net.InetSocketAddress;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.bson.Document;
 import org.junit.After;
@@ -12,6 +15,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.validator.PublicClassValidator;
 
 import com.mongodb.ServerAddress;
 import com.dimartinoFilippo.model.Author;
@@ -102,5 +106,32 @@ public class BookMongoRepositoryTest {
 				new Book("12345", "Il Visconte Dimezzato", TEST_AUTHOR, 1952));
 	}
 	
+	@Test
+	public void testSave() {
+		Book book = new Book("1234", "Il Barone Rampante", TEST_AUTHOR, 1957);
+		bookRepository.save(book);
+		assertThat(readAllBooksFromDatabase()).containsExactly(book);
+	}
+	
+	
+	private List<Book> readAllBooksFromDatabase() {
+		return StreamSupport
+				.stream(collection.find().spliterator(), false)
+				.map(d -> {
+					Document authorDoc = (Document) d.get("author");
+					Author author = new Author(
+							authorDoc.getString("id"),
+							authorDoc.getString("firstName"),
+							authorDoc.getString("lastName")
+							);
+					return new Book(
+							d.getString("isbn"),
+							d.getString("title"),
+							author,
+							d.getInteger("publicationYear")
+							);
+				})
+				.collect(Collectors.toList());
+	}
 	
 }
