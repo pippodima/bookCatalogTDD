@@ -1,5 +1,6 @@
 package com.dimartinoFilippo.repository.mongo;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -56,8 +57,7 @@ public class BookMongoRepository implements BookRepository{
 
 	@Override
 	public List<Book> findByAuthor(String authorId) {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 	private Book fromDocumentToBook(Document d) {
@@ -73,7 +73,7 @@ public class BookMongoRepository implements BookRepository{
 				author,
 				d.getInteger("publicationYear")
 				);
-}
+	}
 	
 	private Document fromBookToDocument(Book book) {
 		return new Document()
@@ -85,6 +85,6 @@ public class BookMongoRepository implements BookRepository{
 						.append("lastName", book.getAuthor().getLastName())
 						)
 				.append("publicationYear", book.getPublicationYear());
-		}
+	}
 	
 }
