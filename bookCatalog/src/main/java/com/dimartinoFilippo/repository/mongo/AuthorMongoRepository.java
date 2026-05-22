@@ -2,6 +2,7 @@ package com.dimartinoFilippo.repository.mongo;
 
 import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.DB_NAME;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.Document;
@@ -32,8 +33,7 @@ public class AuthorMongoRepository implements AuthorRepository{
 
 	@Override
 	public List<Author> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
