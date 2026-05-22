@@ -12,6 +12,7 @@ import com.dimartinoFilippo.model.Author;
 import com.dimartinoFilippo.repository.AuthorRepository;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 public class AuthorMongoRepository implements AuthorRepository{
 	
@@ -28,7 +29,10 @@ public class AuthorMongoRepository implements AuthorRepository{
 
 	@Override
 	public Author findById(String id) {
-		// TODO Auto-generated method stub
+		Document d = collection.find(Filters.eq("id", id)).first();
+		if (d != null) {
+			return fromDocumentToAuthor(d);
+		}
 		return null;
 	}
 
