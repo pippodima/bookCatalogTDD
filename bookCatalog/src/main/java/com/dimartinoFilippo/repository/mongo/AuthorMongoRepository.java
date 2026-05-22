@@ -51,7 +51,7 @@ public class AuthorMongoRepository implements AuthorRepository{
 	}
 
 	@Override
-	public void delete(Author authorToDelete) {
+	public void delete(String idOfauthorToDelete) {
 		// TODO Auto-generated method stub
 		
 	}
