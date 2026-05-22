@@ -118,11 +118,19 @@ public class BookMongoRepositoryTestcontainersIT {
 	}
 
 	@Test
-	public void testFindBooksByAuthorWhenThereAreNoBooksRelated() {
+	public void testITFindBooksByAuthorWhenThereAreNoBooksRelated() {
 		addTestBookToDatabase(TEST_BOOK_1);
 		assertThat(bookRepository.findByAuthor("b2")).isEmpty();;
 		
 	}
+	
+	@Test
+	public void testITFindBooksByAuthorWhenThereAreBooksRelated() {
+		addTestBookToDatabase(TEST_BOOK_1);
+		addTestBookToDatabase(TEST_BOOK_2);
+		assertThat(bookRepository.findByAuthor("a1")).containsExactly(TEST_BOOK_1, TEST_BOOK_2);
+	}
+
 
 
 }
