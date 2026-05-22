@@ -4,6 +4,10 @@ import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.DB_NAME;
 import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.BOOK;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
@@ -78,6 +82,34 @@ public class BookMongoRepositoryTestcontainersIT {
 		assertThat(bookRepository.findByIsbn("1234")).isEqualTo(TEST_BOOK_1);
 	}
 	
+	@Test
+	public void testITSave() {
+		bookRepository.save(TEST_BOOK_1);
+		assertThat(readAllBooksFromDatabase()).containsExactly(TEST_BOOK_1);
+		
+	}
 	
+	private List<Book> readAllBooksFromDatabase() {
+		return StreamSupport
+				.stream(collection.find().spliterator(), false)
+				.map(d -> {
+					Document authorDoc = (Document) d.get("author");
+					Author author = new Author(
+							authorDoc.getString("id"),
+							authorDoc.getString("firstName"),
+							authorDoc.getString("lastName")
+							);
+					return new Book(
+							d.getString("isbn"),
+							d.getString("title"),
+							author,
+							d.getInteger("publicationYear")
+							);
+				})
+				.collect(Collectors.toList());
+	}
+	
+	
+
 
 }
