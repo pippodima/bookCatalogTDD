@@ -53,7 +53,7 @@ public class BookMongoRepositoryTest {
 	
 	@Before
 	public void setup() {
-        client = new MongoClient(new ServerAddress(serverAddress));
+		client = new MongoClient(new ServerAddress(serverAddress));
 		bookRepository = new BookMongoRepository(client);
 		MongoDatabase database = client.getDatabase(DB_NAME);
 		database.drop();

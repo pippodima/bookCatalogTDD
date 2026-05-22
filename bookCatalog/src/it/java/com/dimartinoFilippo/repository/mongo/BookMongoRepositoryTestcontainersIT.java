@@ -70,5 +70,14 @@ public class BookMongoRepositoryTestcontainersIT {
 						)
 				.append("publicationYear", book.getPublicationYear()));
 	}
+	
+	@Test
+	public void testITFindByIsbn() {
+		addTestBookToDatabase(TEST_BOOK_1);
+		addTestBookToDatabase(TEST_BOOK_2);
+		assertThat(bookRepository.findByIsbn("1234")).isEqualTo(TEST_BOOK_1);
+	}
+	
+	
 
 }
