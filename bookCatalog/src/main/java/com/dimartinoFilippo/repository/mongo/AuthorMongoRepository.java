@@ -46,13 +46,13 @@ public class AuthorMongoRepository implements AuthorRepository{
 
 	@Override
 	public void save(Author newAuthor) {
-		// TODO Auto-generated method stub
+		collection.insertOne(fromAuthorToDocument(newAuthor));
 		
 	}
 
 	@Override
 	public void delete(String idOfauthorToDelete) {
-		// TODO Auto-generated method stub
+		collection.deleteOne(Filters.eq("id", idOfauthorToDelete));
 		
 	}
 	
@@ -63,6 +63,14 @@ public class AuthorMongoRepository implements AuthorRepository{
 			d.getString("lastName")
 			);
 	}
+	
+	private Document fromAuthorToDocument(Author author) {
+		return new Document()
+				.append("id", author.getId())
+				.append("firstName", author.getFirstName())
+				.append("lastName", author.getLastName());
+	}
+
 
 
 }
