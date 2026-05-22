@@ -109,7 +109,13 @@ public class BookMongoRepositoryTestcontainersIT {
 				.collect(Collectors.toList());
 	}
 	
-	
+	@Test
+	public void testITDelete () {
+		addTestBookToDatabase(TEST_BOOK_1);
+		bookRepository.delete(TEST_BOOK_1.getIsbn());
+		assertThat(readAllBooksFromDatabase()).isEmpty();
+		
+	}
 
 
 }
