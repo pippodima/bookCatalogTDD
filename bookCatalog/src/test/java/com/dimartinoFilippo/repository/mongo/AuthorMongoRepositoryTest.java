@@ -76,5 +76,20 @@ public class AuthorMongoRepositoryTest {
 				.append("firstName", author.getFirstName())
 				.append("lastName", author.getLastName()));
 	}
+	
+	@Test
+	public void testFindByIdWhenIdIsNotPresent() {
+		assertThat(authorRepository.findById("id-not-present")).isNull();
+	}
+	
+	@Test
+	public void testFindByIdWhenIdIsPresent() {
+		addTestAuthorToDatabase(TEST_AUTHOR_1);
+		addTestAuthorToDatabase(TEST_AUTHOR_2);
+		assertThat(authorRepository.findById("a2"))
+			.isEqualTo(TEST_AUTHOR_2);
+	}
+
+
 
 }
