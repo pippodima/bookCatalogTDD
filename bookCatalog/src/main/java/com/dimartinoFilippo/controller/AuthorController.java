@@ -49,7 +49,7 @@ public class AuthorController {
 			bookRepository.delete(book.getIsbn());
 			libraryView.bookRemoved(book);
 		}
-		authorRepository.delete(authorToDelete);
+		authorRepository.delete(authorToDelete.getId());
 		libraryView.authorRemoved(authorToDelete);
 		
 	}

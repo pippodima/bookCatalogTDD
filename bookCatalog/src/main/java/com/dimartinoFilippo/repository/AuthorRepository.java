@@ -12,6 +12,6 @@ public interface AuthorRepository {
 
 	void save(Author newAuthor);
 
-	void delete(Author authorToDelete);
+	void delete(String idOfauthorToDelete);
 
 }

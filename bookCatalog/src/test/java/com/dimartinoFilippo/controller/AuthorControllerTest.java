@@ -85,7 +85,7 @@ public class AuthorControllerTest {
 		
 		authorController.deleteAuthor(TEST_AUTHOR);
 		
-		verify(authorRepository).delete(TEST_AUTHOR);
+		verify(authorRepository).delete(TEST_AUTHOR.getId());
 		verify(libraryView).authorRemoved(TEST_AUTHOR);
 		
 	}
@@ -103,7 +103,7 @@ public class AuthorControllerTest {
 		verify(bookRepository).delete(TEST_BOOK2.getIsbn());
 		verify(libraryView).bookRemoved(TEST_BOOK2);
 
-		verify(authorRepository).delete(TEST_AUTHOR);
+		verify(authorRepository).delete(TEST_AUTHOR.getId());
 		verify(libraryView).authorRemoved(TEST_AUTHOR);
 	}
 	
