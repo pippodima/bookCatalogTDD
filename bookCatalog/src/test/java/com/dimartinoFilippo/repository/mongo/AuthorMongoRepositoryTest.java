@@ -58,11 +58,23 @@ public class AuthorMongoRepositoryTest {
 		client.close();
 	}
 	
-    @Test
-    public void testFindAllWhenDatabaseIsEmpty() {
-        assertThat(authorRepository.findAll()).isEmpty();
-    }
+	@Test
+	public void testFindAllWhenDatabaseIsEmpty() {
+		assertThat(authorRepository.findAll()).isEmpty();
+	}
 
-
+	@Test
+	public void testFindAllWhenDatabaseIsNotEmpty() {
+		addTestAuthorToDatabase(TEST_AUTHOR_1);
+		addTestAuthorToDatabase(TEST_AUTHOR_2);
+		assertThat(authorRepository.findAll()).containsExactly(TEST_AUTHOR_1, TEST_AUTHOR_2);
+	}
+	
+	private void addTestAuthorToDatabase(Author author) {
+		collection.insertOne(new Document()
+				.append("id", author.getId())
+				.append("firstName", author.getFirstName())
+				.append("lastName", author.getLastName()));
+	}
 
 }
