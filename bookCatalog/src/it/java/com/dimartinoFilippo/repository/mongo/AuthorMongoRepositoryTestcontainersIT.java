@@ -4,6 +4,10 @@ import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.DB_NAME;
 import static com.dimartinoFilippo.repository.mongo.AuthorMongoRepository.AUTHOR;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
@@ -70,6 +74,30 @@ public class AuthorMongoRepositoryTestcontainersIT {
 				.append("lastName", author.getLastName()));
 	}
 
+	@Test
+	public void testITSave() {
+		authorRepository.save(TEST_AUTHOR_1);
+		assertThat(readAllAuthorsFromDatabase())
+		.containsExactly(TEST_AUTHOR_1);
+	}
+
+	@Test
+	public void testITDelete() {
+		addTestAuthorToDatabase(TEST_AUTHOR_1);
+		authorRepository.delete(TEST_AUTHOR_1.getId());
+		assertThat(readAllAuthorsFromDatabase()).isEmpty();
+	}
+
+	private List<Author> readAllAuthorsFromDatabase() {
+		return StreamSupport
+			.stream(collection.find().spliterator(), false)
+			.map(d -> new Author(
+					d.getString("id"),
+					d.getString("firstName"),
+					d.getString("lastName")
+					))
+			.collect(Collectors.toList());
+	}
 
 
 }
