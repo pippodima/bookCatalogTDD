@@ -1,8 +1,12 @@
 package com.dimartinoFilippo.controller;
 
+import static org.mockito.Mockito.verify;
+import static java.util.Arrays.asList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testcontainers.containers.MongoDBContainer;
@@ -56,6 +60,15 @@ public class BookControllerIT {
 	public void releaseMocks()throws Exception {
 		closeable.close();
 	}
+	
+	@Test
+	public void testFindAllBooks() {
+		bookRepository.save(TEST_BOOK_1);
+		bookRepository.save(TEST_BOOK_2);
+		bookController.findAllBooks();
+		verify(libraryView).showAllBooks(asList(TEST_BOOK_1, TEST_BOOK_2));
+	}
+	
 	
 
 }
