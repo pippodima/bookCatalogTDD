@@ -69,6 +69,11 @@ public class BookControllerIT {
 		verify(libraryView).showAllBooks(asList(TEST_BOOK_1, TEST_BOOK_2));
 	}
 	
-	
+	@Test
+	public void testAddNewBookWhenAuthorExistAndBookDoesNotExist() {
+		authorRepository.save(TEST_AUTHOR);
+		bookController.addNewBook(TEST_BOOK_1);
+		verify(libraryView).newBookAdded(TEST_BOOK_1);
+	}
 
 }
