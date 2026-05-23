@@ -82,5 +82,11 @@ public class BookControllerIT {
 		bookController.addNewBook(TEST_BOOK_1);
 		verify(libraryView).showErrorBookAlreadyExists("The selected ISBN " + TEST_BOOK_1.getIsbn() + " is already in use", TEST_BOOK_1);
 	}
+	
+	@Test
+	public void testAddNewBookWhenAuthorDoesNotExist() {
+		bookController.addNewBook(TEST_BOOK_1);
+		verify(libraryView).showErrorAuthorDoesNotExist("The selected author does not exist", TEST_AUTHOR);
+	}
 
 }
