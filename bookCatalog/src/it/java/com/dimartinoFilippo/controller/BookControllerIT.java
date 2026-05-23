@@ -75,5 +75,12 @@ public class BookControllerIT {
 		bookController.addNewBook(TEST_BOOK_1);
 		verify(libraryView).newBookAdded(TEST_BOOK_1);
 	}
+	
+	@Test
+	public void testAddNewBookWhenBookAlreadyExists() {
+		bookRepository.save(TEST_BOOK_1);
+		bookController.addNewBook(TEST_BOOK_1);
+		verify(libraryView).showErrorBookAlreadyExists("The selected ISBN " + TEST_BOOK_1.getIsbn() + " is already in use", TEST_BOOK_1);
+	}
 
 }
