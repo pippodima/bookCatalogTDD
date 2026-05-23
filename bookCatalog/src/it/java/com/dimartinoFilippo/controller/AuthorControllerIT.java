@@ -1,8 +1,13 @@
 package com.dimartinoFilippo.controller;
 
+import static org.mockito.Mockito.verify;
+import static java.util.Arrays.asList;
+
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testcontainers.containers.MongoDBContainer;
@@ -56,4 +61,11 @@ public class AuthorControllerIT {
 		closeable.close();
 	}
 
+	@Test
+	public void testFindAllAuthors() {
+		authorRepository.save(TEST_AUTHOR_1);
+		authorRepository.save(TEST_AUTHOR_2);
+		authorController.findAllAuthors();
+		verify(libraryView).showAllAuthors(asList(TEST_AUTHOR_1, TEST_AUTHOR_2));
+	}
 }
