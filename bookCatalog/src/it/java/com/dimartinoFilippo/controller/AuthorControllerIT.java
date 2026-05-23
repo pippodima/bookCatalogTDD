@@ -82,5 +82,30 @@ public class AuthorControllerIT {
 		verify(libraryView).showErrorAuthorAlreadyExist("The selected id " + TEST_AUTHOR_1.getId() + " is already assigned to another author", TEST_AUTHOR_1);
 	}
 	
+	@Test
+	public void testDeleteAuthorWhenAuthorExist() {
+		authorRepository.save(TEST_AUTHOR_1);
+		authorController.deleteAuthor(TEST_AUTHOR_1);
+		verify(libraryView).authorRemoved(TEST_AUTHOR_1);
+	}
+	
+	@Test
+	public void testDeleteAuthorWhenAuthorDoesNotExist() {
+		authorController.deleteAuthor(TEST_AUTHOR_1);
+		verify(libraryView).showErrorAuthorDoesNotExist("The selected id " + TEST_AUTHOR_1.getId() + " is not associated with any author", TEST_AUTHOR_1);
+	}
+	
+	@Test
+	public void testDeleteAuthorWhenAuthorExistsAndHasBooks() {
+		authorRepository.save(TEST_AUTHOR_1);
+		bookRepository.save(TEST_BOOK_1);
+		bookRepository.save(TEST_BOOK_2);
+		authorController.deleteAuthor(TEST_AUTHOR_1);
+		
+		verify(libraryView).bookRemoved(TEST_BOOK_1);
+		verify(libraryView).bookRemoved(TEST_BOOK_2);
+		verify(libraryView).authorRemoved(TEST_AUTHOR_1);
+	}
+	
 	
 }
