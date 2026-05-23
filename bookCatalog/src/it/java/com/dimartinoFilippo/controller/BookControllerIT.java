@@ -88,5 +88,18 @@ public class BookControllerIT {
 		bookController.addNewBook(TEST_BOOK_1);
 		verify(libraryView).showErrorAuthorDoesNotExist("The selected author does not exist", TEST_AUTHOR);
 	}
+	
+	@Test
+	public void testDeleteBookWhenBookExists() {
+		bookRepository.save(TEST_BOOK_1);
+		bookController.deleteBook(TEST_BOOK_1);
+		verify(libraryView).bookRemoved(TEST_BOOK_1);
+	}
+	
+	@Test
+	public void testDeleteBookWhenBookDoesNotExists() {
+		bookController.deleteBook(TEST_BOOK_1);
+		verify(libraryView).showErrorBookDoesNotExist("The selected book does not exist", TEST_BOOK_1);
+	}
 
 }
