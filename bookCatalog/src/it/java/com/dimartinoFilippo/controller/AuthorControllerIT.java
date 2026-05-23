@@ -60,7 +60,7 @@ public class AuthorControllerIT {
 	public void releaseMocks() throws Exception {
 		closeable.close();
 	}
-
+	
 	@Test
 	public void testFindAllAuthors() {
 		authorRepository.save(TEST_AUTHOR_1);
@@ -68,4 +68,19 @@ public class AuthorControllerIT {
 		authorController.findAllAuthors();
 		verify(libraryView).showAllAuthors(asList(TEST_AUTHOR_1, TEST_AUTHOR_2));
 	}
+	
+	@Test
+	public void testAddNewAuthorWhenAuthorDoesNotExist() {
+		authorController.addNewAuthor(TEST_AUTHOR_1);
+		verify(libraryView).newAuthorAdded(TEST_AUTHOR_1);
+	}
+
+	@Test
+	public void testAddNewAuthorWhenAuthorAlreadyExist() {
+		authorRepository.save(TEST_AUTHOR_1);
+		authorController.addNewAuthor(TEST_AUTHOR_1);
+		verify(libraryView).showErrorAuthorAlreadyExist("The selected id " + TEST_AUTHOR_1.getId() + " is already assigned to another author", TEST_AUTHOR_1);
+	}
+	
+	
 }
