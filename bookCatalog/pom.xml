@@ -17,7 +17,7 @@
     <junit-version>4.13.2</junit-version>
     <mockito-core-version>5.19.0</mockito-core-version>
     <mongo-java-driver-version>3.12.14</mongo-java-driver-version>
-    <assertj-core-version>3.27.4</assertj-core-version>
+    <assertj-core-version>3.17.1</assertj-core-version>
     <slf4j-api-version>2.0.17</slf4j-api-version>
     <testcontainers-mongodb-version>1.21.0</testcontainers-mongodb-version>
     <testcontainers-version>1.21.3</testcontainers-version>
@@ -57,7 +57,7 @@
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
+      <artifactId>assertj-swing-junit</artifactId>
       <version>${assertj-core-version}</version>
       <scope>test</scope>
     </dependency>
