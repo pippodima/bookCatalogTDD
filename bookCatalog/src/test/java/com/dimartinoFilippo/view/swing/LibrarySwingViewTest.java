@@ -1,6 +1,7 @@
 package com.dimartinoFilippo.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 
@@ -194,6 +195,17 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.label("errorAuthorLabel").requireText(" ");
 		
 	}
+	
+	@Test
+	@GUITest
+	public void testAddAuthorButtonShouldDelegateToAuthorControllerNewAuthor() {
+		window.textBox("idAuthorTextBox").enterText("a1");
+		window.textBox("firstNameTextBox").enterText("Italo");
+		window.textBox("lastNameTextBox").enterText("Calvino");
+		window.button(JButtonMatcher.withText("Add author")).click();
+		verify(authorController).addNewAuthor(new Author("a1", "Italo", "Calvino"));
+	}
+
 	
 	
 	
