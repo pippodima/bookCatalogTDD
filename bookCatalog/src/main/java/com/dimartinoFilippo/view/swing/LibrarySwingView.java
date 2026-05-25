@@ -161,6 +161,9 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 						txtFirstName.getText(), 
 						txtLastName.getText())));
 
+		btnDeleteAuthor.addActionListener(e -> 
+				authorController.deleteAuthor(listAuthors.getSelectedValue()));
+		
 		return panel;
 
 	}
