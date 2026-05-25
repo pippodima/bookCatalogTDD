@@ -159,6 +159,22 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.label("errorAuthorLabel").requireText(" ");
 	}
 	
+	@Test
+	@GUITest
+	public void testShowErrorAuthorDoesNotExistShouldShowMessageAndRemoveFromList() {
+		Author author1 = new Author("a1", "Italo", "Calvino");
+		Author author2 = new Author("a2", "Umberto", "Eco");
+		GuiActionRunner.execute(() -> {
+			view.getListAuthorModel().addElement(author1);
+			view.getListAuthorModel().addElement(author2);});
+		
+		GuiActionRunner.execute(() -> 
+			view.showErrorAuthorDoesNotExist("error message", author1));
+		window.label("errorAuthorLabel")
+			.requireText("error message: " + author1.toString());
+		assertThat(window.list("authorsList").contents()).containsExactly(author2.toString());
+	}
+	
 	
 	
 }
