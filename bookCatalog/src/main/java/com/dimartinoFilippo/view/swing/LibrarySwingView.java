@@ -2,6 +2,8 @@ package com.dimartinoFilippo.view.swing;
 
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -135,6 +137,20 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		lblErrorAuthor.setName("errorAuthorLabel");
 		lblErrorAuthor.setBounds(10, 360, 270, 20);
 		panel.add(lblErrorAuthor);
+		
+		KeyAdapter btnAddAuthorEnabler = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				btnAddAuthor.setEnabled(
+						!txtIdAuthor.getText().trim().isEmpty() &&
+						!txtFirstName.getText().trim().isEmpty() &&
+						!txtLastName.getText().trim().isEmpty()
+						);
+			}
+		};
+		txtIdAuthor.addKeyListener(btnAddAuthorEnabler);
+		txtFirstName.addKeyListener(btnAddAuthorEnabler);
+		txtLastName.addKeyListener(btnAddAuthorEnabler);
 
 		return panel;
 
