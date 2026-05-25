@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.dimartinoFilippo.controller.AuthorController;
 import com.dimartinoFilippo.controller.BookController;
+import com.dimartinoFilippo.model.Author;
 
 @RunWith(GUITestRunner.class)
 public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
@@ -110,6 +111,18 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.textBox("firstNameTextBox").enterText("Italo");
 		window.textBox("lastNameTextBox").enterText(" ");
 		window.button(JButtonMatcher.withText("Add author")).requireDisabled();
+	}
+	
+	@Test
+	@GUITest
+	public void testDeleteAuthorButtonShouldBeEnabledOnlyWhenAnAuthorIsSelected() {
+		GuiActionRunner.execute(() -> 
+				view.getListAuthorModel()
+				.addElement(new Author("a1", "Italo", "Calvino")));
+		window.list("authorsList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete author")).requireEnabled();
+		window.list("authorsList").clearSelection();
+		window.button(JButtonMatcher.withText("Delete author")).requireDisabled();
 	}
 
 	

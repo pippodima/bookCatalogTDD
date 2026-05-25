@@ -122,7 +122,7 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		panel.add(btnAddAuthor);
 
 		listAuthorModel = new DefaultListModel<>();
-		listAuthors = new JList<>(listAuthorModel);
+		listAuthors = new JList<>(getListAuthorModel());
 		listAuthors.setName("authorsList");
 		listAuthors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listAuthors.setBounds(10, 155, 270, 160);
@@ -290,6 +290,10 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	public void setAuthorController(AuthorController authorController) {
 		this.authorController = authorController;
+	}
+
+	public DefaultListModel<Author> getListAuthorModel() {
+		return listAuthorModel;
 	}
 
 }
