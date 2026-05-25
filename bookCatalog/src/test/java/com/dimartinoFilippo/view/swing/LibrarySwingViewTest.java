@@ -1,9 +1,13 @@
 package com.dimartinoFilippo.view.swing;
 
+import org.assertj.swing.annotation.GUITest;
+import org.assertj.swing.core.matcher.JButtonMatcher;
+import org.assertj.swing.core.matcher.JLabelMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -42,5 +46,35 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 	public void onTearDown() throws Exception {
 		closeable.close();
 	}
+	
+	@Test
+	@GUITest
+	public void testControlsInitialStates() {
+		window.requireTitle("Library Management");
+		// author panel
+		window.label(JLabelMatcher.withText("Id"));
+		window.textBox("idAuthorTextBox").requireEnabled();
+		window.label(JLabelMatcher.withText("First name"));
+		window.textBox("firstNameTextBox").requireEnabled();
+		window.label(JLabelMatcher.withText("Last name"));
+		window.textBox("lastNameTextBox").requireEnabled();
+		window.button(JButtonMatcher.withText("Add author")).requireDisabled();
+		window.list("authorsList").requireEnabled();
+		window.button(JButtonMatcher.withText("Delete author")).requireDisabled();
+		window.label("errorAuthorLabel").requireText(" ");
+		// book panel
+		window.label(JLabelMatcher.withText("ISBN"));
+		window.textBox("isbnTextBox").requireEnabled();
+		window.label(JLabelMatcher.withText("Title"));
+		window.textBox("titleTextBox").requireEnabled();
+		window.label(JLabelMatcher.withText("Publication year"));
+		window.textBox("publicationYearTextBox").requireEnabled();
+		window.comboBox("authorComboBox").requireDisabled();
+		window.button(JButtonMatcher.withText("Add book")).requireDisabled();
+		window.list("booksList").requireEnabled();
+		window.button(JButtonMatcher.withText("Delete book")).requireDisabled();
+		window.label("errorBookLabel").requireText(" ");
+	}
+	
 
 }
