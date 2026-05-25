@@ -76,5 +76,41 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.label("errorBookLabel").requireText(" ");
 	}
 	
+	@Test
+	@GUITest
+	public void testWhenAllAuthorFieldsAreNonEmptyThenAddAuthorButtonShouldBeEnabled() {
+		window.textBox("idAuthorTextBox").enterText("a1");
+		window.textBox("firstNameTextBox").enterText("Italo");
+		window.textBox("lastNameTextBox").enterText("Calvino");
+		window.button(JButtonMatcher.withText("Add author")).requireEnabled();
+	}
+	
+	@Test
+	@GUITest
+	public void testWhenAnyAuthorFieldIsBlankThenAddAuthorButtonShouldBeDisabled() {
+		window.textBox("idAuthorTextBox").enterText(" ");
+		window.textBox("firstNameTextBox").enterText("Italo");
+		window.textBox("lastNameTextBox").enterText("Calvino");
+		window.button(JButtonMatcher.withText("Add author")).requireDisabled();
 
+		window.textBox("idAuthorTextBox").setText("");
+		window.textBox("firstNameTextBox").setText("");
+		window.textBox("lastNameTextBox").setText("");
+
+		window.textBox("idAuthorTextBox").enterText("a1");
+		window.textBox("firstNameTextBox").enterText(" ");
+		window.textBox("lastNameTextBox").enterText("Calvino");
+		window.button(JButtonMatcher.withText("Add author")).requireDisabled();
+
+		window.textBox("idAuthorTextBox").setText("");
+		window.textBox("firstNameTextBox").setText("");
+		window.textBox("lastNameTextBox").setText("");
+
+		window.textBox("idAuthorTextBox").enterText("a1");
+		window.textBox("firstNameTextBox").enterText("Italo");
+		window.textBox("lastNameTextBox").enterText(" ");
+		window.button(JButtonMatcher.withText("Add author")).requireDisabled();
+	}
+
+	
 }
