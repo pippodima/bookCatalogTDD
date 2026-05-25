@@ -129,15 +129,26 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.button(JButtonMatcher.withText("Delete author")).requireDisabled();
 	}
 	
-
+	
 	@Test
 	@GUITest
 	public void testShowAllAuthorsShouldAddAuthorsToList() {
 		Author author1 = new Author("a1", "Italo", "Calvino");
 		Author author2 = new Author("a2", "Umberto", "Eco");
 		GuiActionRunner.execute(() -> 
-			view.showAllAuthors(Arrays.asList(author1, author2)));
+		view.showAllAuthors(Arrays.asList(author1, author2)));
 		assertThat(window.list("authorsList").contents()).containsExactly(author1.toString(), author2.toString());
 	}
+
+	@Test
+	@GUITest
+	public void testShowErrorAuthorAlreadyExist() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() -> 
+			view.showErrorAuthorAlreadyExist("error message", author));
+		window.label("errorAuthorLabel").requireText("error message: " + author.toString());
+	}
+	
+	
 	
 }
