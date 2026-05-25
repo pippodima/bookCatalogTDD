@@ -276,8 +276,14 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void newAuthorAdded(Author authorToAdd) {
-		// TODO Auto-generated method stub
+		listAuthorModel.addElement(authorToAdd);
+		authorComboBoxModel.addElement(authorToAdd);
+		resetAuthorErrorLabel();
 		
+	}
+	
+	private void resetAuthorErrorLabel() {
+		lblErrorAuthor.setText(" ");
 	}
 
 	@Override
