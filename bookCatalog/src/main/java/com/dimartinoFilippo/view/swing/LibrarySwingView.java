@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.dimartinoFilippo.controller.AuthorController;
+import com.dimartinoFilippo.controller.BookController;
 import com.dimartinoFilippo.model.Author;
 import com.dimartinoFilippo.model.Book;
 import com.dimartinoFilippo.view.LibraryView;
@@ -16,6 +18,9 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
+	private BookController bookController;
+	private AuthorController authorController;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -103,6 +108,14 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 	public void authorRemoved(Author authorToRemove) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void setBookController(BookController bookController) {
+		this.bookController = bookController;
+	}
+
+	public void setAuthorController(AuthorController authorController) {
+		this.authorController = authorController;
 	}
 
 }
