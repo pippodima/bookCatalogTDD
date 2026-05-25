@@ -265,7 +265,12 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void showAllAuthors(List<Author> authors) {
-		// TODO Auto-generated method stub
+		listAuthorModel.clear();
+		authorComboBoxModel.removeAllElements();
+		authors.forEach(a -> {
+			listAuthorModel.addElement(a);
+			authorComboBoxModel.addElement(a);
+		});
 		
 	}
 
