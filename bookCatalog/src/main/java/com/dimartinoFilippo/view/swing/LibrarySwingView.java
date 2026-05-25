@@ -295,7 +295,9 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void authorRemoved(Author authorToRemove) {
-		// TODO Auto-generated method stub
+		listAuthorModel.removeElement(authorToRemove);
+		authorComboBoxModel.removeElement(authorToRemove);
+		resetAuthorErrorLabel();
 		
 	}
 
