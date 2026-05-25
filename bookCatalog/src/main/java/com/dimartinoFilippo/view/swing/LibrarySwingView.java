@@ -247,7 +247,8 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void showErrorAuthorDoesNotExist(String errorMessage, Author notExistigAuthor) {
-		// TODO Auto-generated method stub
+		lblErrorAuthor.setText(errorMessage + ": " + notExistigAuthor);
+		listAuthorModel.removeElement(notExistigAuthor);
 		
 	}
 
