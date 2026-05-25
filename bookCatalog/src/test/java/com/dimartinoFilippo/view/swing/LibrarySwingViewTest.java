@@ -205,6 +205,23 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.button(JButtonMatcher.withText("Add author")).click();
 		verify(authorController).addNewAuthor(new Author("a1", "Italo", "Calvino"));
 	}
+	
+	@Test
+	@GUITest
+	public void testDeleteAuthorButtonShouldDelegateToAuthorControllerDeleteAuthor() {
+		Author author1 = new Author("a1", "Italo", "Calvino");
+		Author author2 = new Author("a2", "Umberto", "Eco");
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<Author> listAuthorModel =
+					view.getListAuthorModel();
+			listAuthorModel.addElement(author1);
+			listAuthorModel.addElement(author2);
+		});
+		
+		window.list("authorsList").selectItem(1);
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		verify(authorController).deleteAuthor(author2);
+	}
 
 	
 	
