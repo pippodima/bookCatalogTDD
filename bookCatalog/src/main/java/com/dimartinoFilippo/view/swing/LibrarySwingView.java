@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import com.dimartinoFilippo.controller.AuthorController;
 import com.dimartinoFilippo.controller.BookController;
@@ -164,6 +166,7 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		btnDeleteAuthor.addActionListener(e -> 
 				authorController.deleteAuthor(listAuthors.getSelectedValue()));
 		
+		
 		return panel;
 
 	}
@@ -231,6 +234,13 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		lblErrorBook.setName("errorBookLabel");
 		lblErrorBook.setBounds(10, 360, 270, 20);
 		panel.add(lblErrorBook);
+		
+		authorComboBoxModel.addListDataListener(new ListDataListener() {
+			@Override public void intervalAdded(ListDataEvent e) { updateComboBox(); }
+			@Override public void intervalRemoved(ListDataEvent e) { updateComboBox(); }
+			@Override public void contentsChanged(ListDataEvent e) { updateComboBox(); }
+		});
+
 
 		return panel;
 
@@ -321,5 +331,10 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 	public DefaultListModel<Author> getListAuthorModel() {
 		return listAuthorModel;
 	}
+	
+	private void updateComboBox() {
+		cmbAuthor.setEnabled(authorComboBoxModel.getSize() > 0);
+	}
+
 
 }
