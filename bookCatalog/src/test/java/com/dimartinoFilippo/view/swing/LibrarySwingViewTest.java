@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
+import javax.swing.DefaultListModel;
+
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
@@ -173,6 +175,24 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.label("errorAuthorLabel")
 			.requireText("error message: " + author1.toString());
 		assertThat(window.list("authorsList").contents()).containsExactly(author2.toString());
+	}
+	
+	@Test
+	@GUITest
+	public void testAuthorRemovedShouldRemoveFromlistAndResetErrorLabel() {
+		Author author1 = new Author("a1", "Italo", "Calvino");
+		Author author2 = new Author("a2", "Umberto", "Eco");
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<Author> listAuthorModel = view.getListAuthorModel();
+			listAuthorModel.addElement(author1);
+			listAuthorModel.addElement(author2);
+		});
+		
+		GuiActionRunner.execute(() ->
+		view.authorRemoved(new Author("a1", "Italo", "Calvino")));
+		assertThat(window.list("authorsList").contents()).containsExactly(author2.toString());
+		window.label("errorAuthorLabel").requireText(" ");
+		
 	}
 	
 	
