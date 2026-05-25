@@ -39,7 +39,7 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 			return view;
 		});
 		window = new FrameFixture(robot(), view);
-		window.show();
+		window.show(new java.awt.Dimension(900, 500));
 		
 	}
 	

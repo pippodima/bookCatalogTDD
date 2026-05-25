@@ -151,6 +151,9 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		txtIdAuthor.addKeyListener(btnAddAuthorEnabler);
 		txtFirstName.addKeyListener(btnAddAuthorEnabler);
 		txtLastName.addKeyListener(btnAddAuthorEnabler);
+		
+		listAuthors.addListSelectionListener(e ->
+		btnDeleteAuthor.setEnabled(listAuthors.getSelectedIndex() != -1));
 
 		return panel;
 
