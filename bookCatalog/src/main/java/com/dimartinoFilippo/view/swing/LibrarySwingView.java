@@ -282,7 +282,7 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void showErrorAuthorAlreadyExist(String errorMessage, Author existingAuthor) {
-		// TODO Auto-generated method stub
+		lblErrorAuthor.setText(errorMessage + ": " + existingAuthor);
 		
 	}
 
