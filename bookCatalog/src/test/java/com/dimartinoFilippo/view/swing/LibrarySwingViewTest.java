@@ -139,14 +139,24 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		view.showAllAuthors(Arrays.asList(author1, author2)));
 		assertThat(window.list("authorsList").contents()).containsExactly(author1.toString(), author2.toString());
 	}
-
+	
 	@Test
 	@GUITest
 	public void testShowErrorAuthorAlreadyExist() {
 		Author author = new Author("a1", "Italo", "Calvino");
 		GuiActionRunner.execute(() -> 
-			view.showErrorAuthorAlreadyExist("error message", author));
+		view.showErrorAuthorAlreadyExist("error message", author));
 		window.label("errorAuthorLabel").requireText("error message: " + author.toString());
+	}
+
+	@Test
+	@GUITest
+	public void testNewAuthorAddedShouldAddToListAndResetErrorLabel() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() -> 
+			view.newAuthorAdded(author));
+		assertThat(window.list("authorsList").contents()).containsExactly(author.toString());
+		window.label("errorAuthorLabel").requireText(" ");
 	}
 	
 	
