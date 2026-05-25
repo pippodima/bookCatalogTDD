@@ -1,5 +1,9 @@
 package com.dimartinoFilippo.view.swing;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Arrays;
+
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
@@ -124,6 +128,16 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.list("authorsList").clearSelection();
 		window.button(JButtonMatcher.withText("Delete author")).requireDisabled();
 	}
+	
 
+	@Test
+	@GUITest
+	public void testShowAllAuthorsShouldAddAuthorsToList() {
+		Author author1 = new Author("a1", "Italo", "Calvino");
+		Author author2 = new Author("a2", "Umberto", "Eco");
+		GuiActionRunner.execute(() -> 
+			view.showAllAuthors(Arrays.asList(author1, author2)));
+		assertThat(window.list("authorsList").contents()).containsExactly(author1.toString(), author2.toString());
+	}
 	
 }
