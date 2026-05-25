@@ -223,7 +223,38 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		verify(authorController).deleteAuthor(author2);
 	}
 
-	
-	
+	@Test
+	@GUITest
+	public void testAuthorComboBoxIsPopulatedWhenNewAuthorIsAdded() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() ->
+			view.newAuthorAdded(author));
+		assertThat(window.comboBox("authorComboBox").contents())
+			.containsExactly(author.toString());
+	}
+
+	@Test
+	@GUITest
+	public void testAuthorComboBoxIsEnabledWhenThereIsAtLeastOneAuthor() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() ->
+			view.newAuthorAdded(author));
+		window.comboBox("authorComboBox").requireEnabled();
+	}
+
+	@Test
+	@GUITest
+	public void testAuthorRemovedShouldAlsoRemoveFromComboBox() {
+		Author author1 = new Author("a1", "Italo", "Calvino");
+		Author author2 = new Author("a2", "Umberto", "Eco");
+		GuiActionRunner.execute(() -> {
+			view.newAuthorAdded(author1);
+			view.newAuthorAdded(author2);
+		});
+		GuiActionRunner.execute(() ->
+			view.authorRemoved(author1));
+		assertThat(window.comboBox("authorComboBox").contents())
+			.containsExactly(author2.toString());
+	}	
 	
 }
