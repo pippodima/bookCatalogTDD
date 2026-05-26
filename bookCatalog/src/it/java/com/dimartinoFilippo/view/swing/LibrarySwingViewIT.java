@@ -117,10 +117,31 @@ public class LibrarySwingViewIT extends AssertJSwingJUnitTestCase{
 		window.button(JButtonMatcher.withText("Add author")).click();
 		assertThat(window.list("authorsList").contents()).isEmpty();
 		window.label("errorAuthorLabel")
-			.requireText("The selected id a1 is already assigned to another author: "
-					+ new Author("a1", "Italo", "Calvino"));
+			.requireText("The selected id a1 is already assigned to another author: "+ new Author("a1", "Italo", "Calvino"));
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteAuthorSuccess() {
+		GuiActionRunner.execute(() ->
+			authorController.addNewAuthor(new Author("a1", "Italo", "Calvino")));
+		window.list("authorsList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		assertThat(window.list("authorsList").contents()).isEmpty();
+	}
+
+	@Test
+	@GUITest
+	public void testDeleteAuthorError() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() ->
+			view.getListAuthorModel().addElement(author));
+		window.list("authorsList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		assertThat(window.list("authorsList").contents()).isEmpty();
+		window.label("errorAuthorLabel")
+			.requireText("The selected id a1 is not associated with any author: " + author.toString());
+	}
 
 
 
