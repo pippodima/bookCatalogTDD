@@ -295,8 +295,19 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.button(JButtonMatcher.withText("Delete book")).requireEnabled();
 		window.list("booksList").clearSelection();
 		window.button(JButtonMatcher.withText("Delete book")).requireDisabled();
-		
-		
+	}
+	
+	@Test
+	@GUITest
+	public void testShowAllBookShouldAddBookToList() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book1 = new Book("1234", "Il Barone Rampante", author, 1957);
+		Book book2 = new Book("12345", "Il Visconte Dimezzato", author, 1952);
+		GuiActionRunner.execute(() ->
+			view.showAllBooks(Arrays.asList(book1, book2)));
+		assertThat(window.list("booksList").contents())
+			.containsExactly(book1.toString(), book2.toString());
+
 	}
 
 	
