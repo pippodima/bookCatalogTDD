@@ -263,7 +263,8 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void showAllBooks(List<Book> books) {
-		// TODO Auto-generated method stub
+		listBookModel.clear();
+		books.forEach(listBookModel::addElement);
 		
 	}
 
