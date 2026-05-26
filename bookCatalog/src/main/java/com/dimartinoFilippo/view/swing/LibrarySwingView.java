@@ -276,7 +276,7 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void showErrorBookAlreadyExists(String errorMessage, Book existingBook) {
-		// TODO Auto-generated method stub
+		lblErrorBook.setText(errorMessage + ": " + existingBook);
 		
 	}
 
