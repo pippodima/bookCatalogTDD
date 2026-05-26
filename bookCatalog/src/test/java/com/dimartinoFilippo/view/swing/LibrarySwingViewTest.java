@@ -255,6 +255,33 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 			view.authorRemoved(author1));
 		assertThat(window.comboBox("authorComboBox").contents())
 			.containsExactly(author2.toString());
-	}	
+	}
+	
+	@Test
+	@GUITest
+	public void testWhenAllBookFieldsAreNonEmptyAndAuthorSelectedThenAddBookButtonShouldBeEnabled() {
+		Author author1 = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() ->
+			view.newAuthorAdded(author1));
+		window.textBox("isbnTextBox").enterText("1234");
+		window.textBox("titleTextBox").enterText("Il Barone Rampante");
+		window.textBox("publicationYearTextBox").enterText("1957");
+		window.comboBox("authorComboBox").selectItem(0);
+		window.button(JButtonMatcher.withText("Add book")).requireEnabled();
+	}
+	
+	@Test
+	@GUITest
+	public void testWhenAnyBookFieldIsBlankThenAddBookButtonShouldBeDisabled() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() ->
+			view.newAuthorAdded(author));
+		window.comboBox("authorComboBox").selectItem(0);
+		window.textBox("isbnTextBox").enterText(" ");
+		window.textBox("titleTextBox").enterText("Il Barone Rampante");
+		window.textBox("publicationYearTextBox").enterText("1957");
+		window.button(JButtonMatcher.withText("Add book")).requireDisabled();
+	}
+
 	
 }
