@@ -320,6 +320,16 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.label("errorBookLabel")
 			.requireText("error message: " + book);
 	}
+	
+	@Test
+	@GUITest
+	public void testShowErrorAuthorDoesNotExistShouldShowMessageInBookErrorLabel() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() ->
+			view.showErrorAuthorDoesNotExist("error message", author));
+		window.label("errorBookLabel")
+			.requireText("error message: " + author);
+	}
 
 	
 }
