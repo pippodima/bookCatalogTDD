@@ -346,19 +346,39 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 	@Test
 	@GUITest
 	public void testShowErrorBookDoesNotExistShouldShowMessageInLabelAndRemoveFromList() {
-	    Author author = new Author("a1", "Italo", "Calvino");
-	    Book book1 = new Book("1234", "Il Barone Rampante", author, 1957);
-	    Book book2 = new Book("12345", "Il Visconte Dimezzato", author, 1952);
-	    GuiActionRunner.execute(() -> {
-	        view.getListBookModel().addElement(book1);
-	        view.getListBookModel().addElement(book2);
-	    });
-	    GuiActionRunner.execute(() ->
-	        view.showErrorBookDoesNotExist("error message", book1));
-	    window.label("errorBookLabel")
-	        .requireText("error message: " + book1);
-	    assertThat(window.list("booksList").contents())
-	        .containsExactly(book2.toString());
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book1 = new Book("1234", "Il Barone Rampante", author, 1957);
+		Book book2 = new Book("12345", "Il Visconte Dimezzato", author, 1952);
+		GuiActionRunner.execute(() -> {
+			view.getListBookModel().addElement(book1);
+			view.getListBookModel().addElement(book2);
+		});
+		GuiActionRunner.execute(() ->
+			view.showErrorBookDoesNotExist("error message", book1));
+		window.label("errorBookLabel")
+			.requireText("error message: " + book1);
+		assertThat(window.list("booksList").contents())
+			.containsExactly(book2.toString());
+	}
+	
+	@Test
+	@GUITest
+	public void testBookRemovedShouldRemoveFromListAndResetErrorLabel() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book1 = new Book("1234", "Il Barone Rampante", author, 1957);
+		Book book2 = new Book("12345", "Il Visconte Dimezzato", author, 1952);
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<Book> listBookModel =
+				view.getListBookModel();
+			listBookModel.addElement(book1);
+			listBookModel.addElement(book2);
+		});
+		GuiActionRunner.execute(() ->
+			view.bookRemoved(
+					new Book("1234", "Il Barone Rampante", author, 1957)));
+		assertThat(window.list("booksList").contents())
+		.containsExactly(book2.toString());
+		window.label("errorBookLabel").requireText(" ");
 	}
 	
 }
