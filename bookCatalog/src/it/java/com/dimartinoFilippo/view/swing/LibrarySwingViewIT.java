@@ -221,6 +221,24 @@ public class LibrarySwingViewIT extends AssertJSwingJUnitTestCase{
 		window.label("errorBookLabel")
 			.requireText("The selected book does not exist: " + book);
 	}
+	
+	@Test
+	@GUITest
+	public void testDeleteAuthorAlsoDeletesHisBooks() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() -> {
+			authorController.addNewAuthor(author);
+			bookController.addNewBook(
+					new Book("1234", "Il Barone Rampante", author, 1957));
+			bookController.addNewBook(
+					new Book("12345", "Il Visconte Dimezzato", author, 1952));
+		});
+		window.list("authorsList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		assertThat(window.list("authorsList").contents()).isEmpty();
+		assertThat(window.list("booksList").contents()).isEmpty();
+	}
+
 
 
 
