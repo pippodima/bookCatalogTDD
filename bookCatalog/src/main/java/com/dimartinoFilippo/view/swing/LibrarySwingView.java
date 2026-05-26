@@ -297,8 +297,8 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void showErrorBookDoesNotExist(String errorMessage, Book notExistingBook) {
-		// TODO Auto-generated method stub
-		
+		lblErrorBook.setText(errorMessage + ": " + notExistingBook);
+		listBookModel.removeElement(notExistingBook);
 	}
 
 	@Override
