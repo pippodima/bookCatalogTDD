@@ -413,4 +413,24 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		verify(bookController).deleteBook(book2);
 	}
 	
+	@Test
+	@GUITest
+	public void testAuthorComboBoxIsDisabledWhenNoAuthorsArePresent() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() -> view.newAuthorAdded(author));
+		window.comboBox("authorComboBox").requireEnabled();
+		GuiActionRunner.execute(() -> view.authorRemoved(author));
+		window.comboBox("authorComboBox").requireDisabled();
+	}
+	
+	@Test
+	@GUITest
+	public void testAddBookButtonShouldRemainDisabledWhenNoAuthorIsSelected() {
+		window.textBox("isbnTextBox").enterText("1234");
+		window.textBox("titleTextBox").enterText("Il Barone Rampante");
+		window.textBox("publicationYearTextBox").enterText("1957");
+		
+		window.button(JButtonMatcher.withText("Add book")).requireDisabled();
+	}
+	
 }
