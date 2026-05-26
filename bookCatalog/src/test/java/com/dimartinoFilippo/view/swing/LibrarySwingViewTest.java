@@ -22,6 +22,7 @@ import org.mockito.MockitoAnnotations;
 import com.dimartinoFilippo.controller.AuthorController;
 import com.dimartinoFilippo.controller.BookController;
 import com.dimartinoFilippo.model.Author;
+import com.dimartinoFilippo.model.Book;
 
 @RunWith(GUITestRunner.class)
 public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
@@ -281,6 +282,21 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.textBox("titleTextBox").enterText("Il Barone Rampante");
 		window.textBox("publicationYearTextBox").enterText("1957");
 		window.button(JButtonMatcher.withText("Add book")).requireDisabled();
+	}
+	
+	@Test
+	@GUITest
+	public void testDeleteBookButtonShouldBeEnabledOnlyWhenBookIsSelected() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book = new Book("1234", "Il Barone Rampante", author, 1957);
+		GuiActionRunner.execute(() -> 
+				view.getListBookModel().addElement(book));
+		window.list("booksList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete book")).requireEnabled();
+		window.list("booksList").clearSelection();
+		window.button(JButtonMatcher.withText("Delete book")).requireDisabled();
+		
+		
 	}
 
 	
