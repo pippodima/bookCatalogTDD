@@ -330,6 +330,18 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.label("errorBookLabel")
 			.requireText("error message: " + author);
 	}
+	
+	@Test
+	@GUITest
+	public void testNewBookAddedShouldAddToListAndResetErrorLabel() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book = new Book("1234", "Il Barone Rampante", author, 1957);
+		GuiActionRunner.execute(() ->
+			view.newBookAdded(book));
+		assertThat(window.list("booksList").contents())
+			.containsExactly(book.toString());
+		window.label("errorBookLabel").requireText(" ");
+	}
 
 	
 }
