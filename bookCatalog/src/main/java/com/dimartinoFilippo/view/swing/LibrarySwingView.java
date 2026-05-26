@@ -255,6 +255,19 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		
 		listBooks.addListSelectionListener(e ->
 				btnDeleteBook.setEnabled(listBooks.getSelectedIndex() != -1));
+		
+		
+		btnAddBook.addActionListener(e -> 
+				bookController.addNewBook(new Book(
+						txtIsbn.getText(),
+						txtTitle.getText(),
+						(Author) cmbAuthor.getSelectedItem(),
+						Integer.parseInt(txtPublicationYear.getText())))
+				);
+		btnDeleteBook.addActionListener(e ->
+			bookController.deleteBook(listBooks.getSelectedValue())
+				);
+		
 
 
 		return panel;
