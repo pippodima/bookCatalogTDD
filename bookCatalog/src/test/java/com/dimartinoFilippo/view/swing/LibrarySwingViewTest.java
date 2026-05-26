@@ -309,6 +309,17 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 			.containsExactly(book1.toString(), book2.toString());
 
 	}
+	
+	@Test
+	@GUITest
+	public void testShowErrorBookAlreadyExistsShouldShowMessageInLabel() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book = new Book("1234", "Il Barone Rampante", author, 1957);
+		GuiActionRunner.execute(() ->
+			view.showErrorBookAlreadyExists("error message", book));
+		window.label("errorBookLabel")
+			.requireText("error message: " + book);
+	}
 
 	
 }
