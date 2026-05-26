@@ -219,7 +219,7 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		panel.add(btnAddBook);
 
 		listBookModel = new DefaultListModel<>();
-		listBooks = new JList<>(listBookModel);
+		listBooks = new JList<>(getListBookModel());
 		listBooks.setName("booksList");
 		listBooks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listBooks.setBounds(10, 185, 270, 130);
@@ -252,6 +252,9 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		txtPublicationYear.addKeyListener(btnAddBookEnabler);
 
 		cmbAuthor.addActionListener(e -> updateAddBookButton());
+		
+		listBooks.addListSelectionListener(e ->
+				btnDeleteBook.setEnabled(listBooks.getSelectedIndex() != -1));
 
 
 		return panel;
@@ -354,6 +357,10 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 				!txtTitle.getText().trim().isEmpty() &&
 				!txtPublicationYear.getText().trim().isEmpty() &&
 				cmbAuthor.getSelectedIndex() != -1);
+	}
+
+	public DefaultListModel<Book> getListBookModel() {
+		return listBookModel;
 	}
 
 }
