@@ -142,6 +142,57 @@ public class LibrarySwingViewIT extends AssertJSwingJUnitTestCase{
 		window.label("errorAuthorLabel")
 			.requireText("The selected id a1 is not associated with any author: " + author.toString());
 	}
+	
+	
+	@Test
+	@GUITest
+	public void testAllBooks() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book1 = new Book("1234", "Il Barone Rampante", author, 1957);
+		Book book2 = new Book("12345", "Il Visconte Dimezzato", author, 1952);
+		authorRepository.save(author);
+		bookRepository.save(book1);
+		bookRepository.save(book2);
+		GuiActionRunner.execute(() -> bookController.findAllBooks());
+		assertThat(window.list("booksList").contents())
+			.containsExactly(book1.toString(), book2.toString());
+	}
+
+	@Test
+	@GUITest
+	public void testAddBookSuccess() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		authorRepository.save(author);
+		GuiActionRunner.execute(() -> authorController.findAllAuthors());
+		window.textBox("isbnTextBox").enterText("1234");
+		window.textBox("titleTextBox").enterText("Il Barone Rampante");
+		window.textBox("publicationYearTextBox").enterText("1957");
+		window.comboBox("authorComboBox").selectItem(0);
+		window.button(JButtonMatcher.withText("Add book")).click();
+		assertThat(window.list("booksList").contents())
+			.containsExactly(
+					new Book("1234", "Il Barone Rampante", author, 1957).toString());
+	}
+
+	@Test
+	@GUITest
+	public void testAddBookErrorBookAlreadyExists() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book = new Book("1234", "Il Barone Rampante", author, 1957);
+		authorRepository.save(author);
+		bookRepository.save(book);
+		GuiActionRunner.execute(() -> {
+			authorController.findAllAuthors();
+			bookController.findAllBooks();
+		});
+		window.textBox("isbnTextBox").enterText("1234");
+		window.textBox("titleTextBox").enterText("Il Barone Rampante");
+		window.textBox("publicationYearTextBox").enterText("1957");
+		window.comboBox("authorComboBox").selectItem(0);
+		window.button(JButtonMatcher.withText("Add book")).click();
+		window.label("errorBookLabel")
+			.requireText("The selected ISBN 1234 is already in use: " + book);
+	}
 
 
 
