@@ -284,6 +284,7 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 	public void showErrorAuthorDoesNotExist(String errorMessage, Author notExistigAuthor) {
 		lblErrorAuthor.setText(errorMessage + ": " + notExistigAuthor);
 		listAuthorModel.removeElement(notExistigAuthor);
+		lblErrorBook.setText(errorMessage + ": " + notExistigAuthor);
 		
 	}
 
