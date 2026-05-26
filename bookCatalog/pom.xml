@@ -24,6 +24,8 @@
     <jacoco-maven-plugin-version>0.8.13</jacoco-maven-plugin-version>
     <pit-maven-plugin-version>1.19.1</pit-maven-plugin-version>
     <coverall-plugin-version>5.0.0</coverall-plugin-version>
+    <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
+
 
   </properties>
 
@@ -145,6 +147,36 @@
             </execution>
           </executions>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven-failsafe-plugin-version}</version>
+          <executions>
+            <execution>
+              <id>IT</id>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            <execution>
+              <id>E2E-test</id>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              <configuration>
+                <excludes>
+                  <exclude>**/*IT.java</exclude>
+                </excludes>
+              <includes>
+                <include>**/*E2E.java</include>
+              </includes>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
       </plugins>
   </build>
   
