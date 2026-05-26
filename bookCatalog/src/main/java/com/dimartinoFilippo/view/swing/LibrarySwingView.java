@@ -270,7 +270,8 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	@Override
 	public void newBookAdded(Book bookToAdd) {
-		// TODO Auto-generated method stub
+		listBookModel.addElement(bookToAdd);
+		resetBookErrorLabel();
 		
 	}
 
@@ -363,6 +364,10 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 
 	public DefaultListModel<Book> getListBookModel() {
 		return listBookModel;
+	}
+	
+	private void resetBookErrorLabel() {
+		lblErrorBook.setText(" ");
 	}
 
 }
