@@ -381,4 +381,36 @@ public class LibrarySwingViewTest extends AssertJSwingJUnitTestCase{
 		window.label("errorBookLabel").requireText(" ");
 	}
 	
+	@Test
+	@GUITest
+	public void testAddBookButtonShouldDelegateToBookControllerNewBook() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		GuiActionRunner.execute(() ->
+			view.newAuthorAdded(author));
+		window.textBox("isbnTextBox").enterText("1234");
+		window.textBox("titleTextBox").enterText("Il Barone Rampante");
+		window.textBox("publicationYearTextBox").enterText("1957");
+		window.comboBox("authorComboBox").selectItem(0);
+		window.button(JButtonMatcher.withText("Add book")).click();
+		verify(bookController).addNewBook(
+				new Book("1234", "Il Barone Rampante", author, 1957));
+	}
+
+	@Test
+	@GUITest
+	public void testDeleteBookButtonShouldDelegateToBookControllerDeleteBook() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book1 = new Book("1234", "Il Barone Rampante", author, 1957);
+		Book book2 = new Book("12345", "Il Visconte Dimezzato", author, 1952);
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<Book> listBookModel =
+					view.getListBookModel();
+			listBookModel.addElement(book1);
+			listBookModel.addElement(book2);
+		});
+		window.list("booksList").selectItem(1);
+		window.button(JButtonMatcher.withText("Delete book")).click();
+		verify(bookController).deleteBook(book2);
+	}
+	
 }
