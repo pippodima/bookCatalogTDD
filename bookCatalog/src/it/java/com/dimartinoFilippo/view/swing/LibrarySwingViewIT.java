@@ -193,6 +193,35 @@ public class LibrarySwingViewIT extends AssertJSwingJUnitTestCase{
 		window.label("errorBookLabel")
 			.requireText("The selected ISBN 1234 is already in use: " + book);
 	}
+	
+	
+	@Test
+	@GUITest
+	public void testDeleteBookSuccess() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		authorRepository.save(author);
+		GuiActionRunner.execute(() ->
+			bookController.addNewBook(
+					new Book("1234", "Il Barone Rampante", author, 1957)));
+		window.list("booksList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete book")).click();
+		assertThat(window.list("booksList").contents()).isEmpty();
+	}
+
+	@Test
+	@GUITest
+	public void testDeleteBookError() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		Book book = new Book("1234", "Il Barone Rampante", author, 1957);
+		GuiActionRunner.execute(() ->
+			view.getListBookModel().addElement(book));
+		window.list("booksList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete book")).click();
+		assertThat(window.list("booksList").contents()).isEmpty();
+		window.label("errorBookLabel")
+			.requireText("The selected book does not exist: " + book);
+	}
+
 
 
 
