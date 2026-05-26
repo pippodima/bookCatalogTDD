@@ -1,13 +1,18 @@
 package com.dimartinoFilippo.view.swing;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.net.InetSocketAddress;
 
+import org.assertj.swing.annotation.GUITest;
+import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.dimartinoFilippo.controller.AuthorController;
@@ -70,13 +75,53 @@ public class LibrarySwingViewIT extends AssertJSwingJUnitTestCase{
 			return view;
 		});
 		window = new FrameFixture(robot(), view);
-		window.show();
+		window.show(new java.awt.Dimension(900, 500));
 	}
 
 	@Override
 	protected void onTearDown() {
 		mongoClient.close();
 	}
+	
+	
+	@Test
+	@GUITest
+	public void testAllAuthors() {
+		Author author1 = new Author("a1", "Italo", "Calvino");
+		Author author2 = new Author("a2", "Umberto", "Eco");
+		authorRepository.save(author1);
+		authorRepository.save(author2);
+		GuiActionRunner.execute(() -> authorController.findAllAuthors());
+		assertThat(window.list("authorsList").contents())
+			.containsExactly(author1.toString(), author2.toString());
+	}
+
+	@Test
+	@GUITest
+	public void testAddAuthorSuccess() {
+		window.textBox("idAuthorTextBox").enterText("a1");
+		window.textBox("firstNameTextBox").enterText("Italo");
+		window.textBox("lastNameTextBox").enterText("Calvino");
+		window.button(JButtonMatcher.withText("Add author")).click();
+		assertThat(window.list("authorsList").contents())
+			.containsExactly(new Author("a1", "Italo", "Calvino").toString());
+	}
+	
+	@Test
+	@GUITest
+	public void testAddAuthorError() {
+		authorRepository.save(new Author("a1", "Italo", "Calvino"));
+		window.textBox("idAuthorTextBox").enterText("a1");
+		window.textBox("firstNameTextBox").enterText("Italo");
+		window.textBox("lastNameTextBox").enterText("Calvino");
+		window.button(JButtonMatcher.withText("Add author")).click();
+		assertThat(window.list("authorsList").contents()).isEmpty();
+		window.label("errorAuthorLabel")
+			.requireText("The selected id a1 is already assigned to another author: "
+					+ new Author("a1", "Italo", "Calvino"));
+	}
+
+
 
 
 
