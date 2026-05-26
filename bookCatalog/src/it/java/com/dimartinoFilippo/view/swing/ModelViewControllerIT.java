@@ -116,6 +116,23 @@ public class ModelViewControllerIT extends AssertJSwingJUnitTestCase{
 		assertThat(bookRepository.findByIsbn("1234")).isNull();
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteAuthorAlsoDeletesBooksFromDatabase() {
+		Author author = new Author("a1", "Italo", "Calvino");
+		authorRepository.save(author);
+		bookRepository.save(new Book("1234", "Il Barone Rampante", author, 1957));
+		bookRepository.save(new Book("12345", "Il Visconte Dimezzato", author, 1952));
+		GuiActionRunner.execute(() -> {
+			authorController.findAllAuthors();
+			bookController.findAllBooks();
+		});
+		window.list("authorsList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		assertThat(authorRepository.findById("a1")).isNull();
+		assertThat(bookRepository.findByAuthor("a1")).isEmpty();
+	}
+
 
 
 }
