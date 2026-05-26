@@ -240,6 +240,18 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 			@Override public void intervalRemoved(ListDataEvent e) { updateComboBox(); }
 			@Override public void contentsChanged(ListDataEvent e) { updateComboBox(); }
 		});
+		
+		KeyAdapter btnAddBookEnabler = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAddBookButton();
+			}
+		};
+		txtIsbn.addKeyListener(btnAddBookEnabler);
+		txtTitle.addKeyListener(btnAddBookEnabler);
+		txtPublicationYear.addKeyListener(btnAddBookEnabler);
+
+		cmbAuthor.addActionListener(e -> updateAddBookButton());
 
 
 		return panel;
@@ -336,5 +348,12 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 		cmbAuthor.setEnabled(authorComboBoxModel.getSize() > 0);
 	}
 
+	private void updateAddBookButton() {
+		btnAddBook.setEnabled(
+				!txtIsbn.getText().trim().isEmpty() &&
+				!txtTitle.getText().trim().isEmpty() &&
+				!txtPublicationYear.getText().trim().isEmpty() &&
+				cmbAuthor.getSelectedIndex() != -1);
+	}
 
 }
