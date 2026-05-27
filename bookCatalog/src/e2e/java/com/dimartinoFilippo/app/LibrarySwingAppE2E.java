@@ -128,4 +128,17 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 			.anySatisfy(e -> assertThat(e).contains("a2", "Umberto", "Eco"));
 	}
 	
+	@Test
+	@GUITest
+	public void testAddAuthorError() {
+		window.textBox("idAuthorTextBox").enterText(AUTHOR_FIXTURE_1_ID);
+		window.textBox("firstNameTextBox").enterText("name");
+		window.textBox("lastNameTextBox").enterText("lastname");
+		window.button(JButtonMatcher.withText("Add author")).click();
+		assertThat(window.label("errorAuthorLabel").text()).contains(
+				AUTHOR_FIXTURE_1_ID,
+				AUTHOR_FIXTURE_1_FIRSTNAME,
+				AUTHOR_FIXTURE_1_LASTNAME);
+	}
+
 }
