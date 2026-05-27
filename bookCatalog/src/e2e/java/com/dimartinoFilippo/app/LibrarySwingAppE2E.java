@@ -187,5 +187,18 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 				e -> assertThat(e).contains("5678", "Il Visconte Dimezzato"));
 		}
 	
-	
+	@Test
+	@GUITest
+	public void testAddBookError() {
+		window.textBox("isbnTextBox").enterText(BOOK_FIXTURE_1_ISBN);
+		window.textBox("titleTextBox").enterText("Another Book");
+		window.textBox("publicationYearTextBox").enterText("2000");
+		window.comboBox("authorComboBox").selectItem(
+				Pattern.compile(".*" + AUTHOR_FIXTURE_1_LASTNAME + ".*"));
+		window.button(JButtonMatcher.withText("Add book")).click();
+		assertThat(window.label("errorBookLabel").text())
+			.contains(BOOK_FIXTURE_1_ISBN, BOOK_FIXTURE_1_TITLE);
+	}
+
+
 }
