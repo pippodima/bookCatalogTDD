@@ -108,8 +108,14 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 	
 	private void removeTestAuthorFromDatabase(String id) {
 		mongoClient.getDatabase(DB_NAME)
-			.getCollection(AUTHORS_COLLECTION)
-			.deleteOne(Filters.eq("id", id));
+		.getCollection(AUTHORS_COLLECTION)
+		.deleteOne(Filters.eq("id", id));
+	}
+	
+	private void removeTestBookFromDatabase(String isbn) {
+		mongoClient.getDatabase(DB_NAME)
+			.getCollection(BOOKS_COLLECTION)
+			.deleteOne(Filters.eq("isbn", isbn));
 	}
 
 
@@ -210,5 +216,17 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 			.noneMatch(e -> e.contains(BOOK_FIXTURE_1_TITLE));
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteBookError() {
+		window.list("booksList").selectItem(
+				Pattern.compile(".*" + BOOK_FIXTURE_1_TITLE + ".*"));
+		removeTestBookFromDatabase(BOOK_FIXTURE_1_ISBN);
+		window.button(JButtonMatcher.withText("Delete book")).click();
+		assertThat(window.label("errorBookLabel").text()).contains(
+				BOOK_FIXTURE_1_ISBN,
+				BOOK_FIXTURE_1_TITLE);
+
+	}
 
 }
