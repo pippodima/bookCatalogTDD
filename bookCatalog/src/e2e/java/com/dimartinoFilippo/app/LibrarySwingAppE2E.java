@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.GenericTypeMatcher;
+import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.runner.GUITestRunner;
@@ -115,4 +116,16 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 				BOOK_FIXTURE_1_ISBN,
 				BOOK_FIXTURE_1_TITLE));
 	}
+
+	@Test
+	@GUITest
+	public void testAddAuthorSuccess() {
+		window.textBox("idAuthorTextBox").enterText("a2");
+		window.textBox("firstNameTextBox").enterText("Umberto");
+		window.textBox("lastNameTextBox").enterText("Eco");
+		window.button(JButtonMatcher.withText("Add author")).click();
+		assertThat(window.list("authorsList").contents())
+			.anySatisfy(e -> assertThat(e).contains("a2", "Umberto", "Eco"));
+	}
+	
 }
