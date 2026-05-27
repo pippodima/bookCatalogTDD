@@ -23,7 +23,7 @@
     <testcontainers-version>1.21.3</testcontainers-version>
     <jacoco-maven-plugin-version>0.8.13</jacoco-maven-plugin-version>
     <pit-maven-plugin-version>1.19.1</pit-maven-plugin-version>
-    <coverall-plugin-version>5.0.0</coverall-plugin-version>
+    <coverall-plugin-version>4.3.0</coverall-plugin-version>
     <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
 
 
@@ -99,6 +99,7 @@
           <configuration>
             <excludes>
               <exclude>**/model/*.*</exclude>
+              <exclude>**/app/*.*</exclude>
             </excludes>
           </configuration>
         </plugin>
@@ -117,12 +118,16 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>com.github.hazendaz.maven</groupId>
+          <groupId>org.eluder.coveralls</groupId>
           <artifactId>coveralls-maven-plugin</artifactId>
           <version>${coverall-plugin-version}</version>
-          <configuration>
-            <repoToken>${env.COVERALLS_REPO_TOKEN}</repoToken>
-          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>javax.xml.bind</groupId>
+              <artifactId>jaxb-api</artifactId>
+              <version>2.3.1</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -205,18 +210,19 @@
             </executions>
           </plugin>
           <plugin>
-            <groupId>com.github.hazendaz.maven</groupId>
+            <groupId>org.eluder.coveralls</groupId>
             <artifactId>coveralls-maven-plugin</artifactId>
             <executions>
               <execution>
                 <id>coveralls-report</id>
                 <phase>verify</phase>
                 <goals>
-                <goal>report</goal>
+                  <goal>report</goal>
                 </goals>
               </execution>
             </executions>
           </plugin>
+
         </plugins>
       </build>
     </profile>
