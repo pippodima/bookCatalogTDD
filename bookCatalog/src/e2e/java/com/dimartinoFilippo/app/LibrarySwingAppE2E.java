@@ -23,6 +23,7 @@ import org.testcontainers.utility.DockerImageName;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.model.Filters;
 
 @RunWith(GUITestRunner.class)
 public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
@@ -104,6 +105,13 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 						.append("lastName", AUTHOR_FIXTURE_1_LASTNAME))
 				.append("publicationYear", year));
 	}
+	
+	private void removeTestAuthorFromDatabase(String id) {
+		mongoClient.getDatabase(DB_NAME)
+			.getCollection(AUTHORS_COLLECTION)
+			.deleteOne(Filters.eq("id", id));
+	}
+
 
 	@Test
 	@GUITest
@@ -142,7 +150,7 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 				AUTHOR_FIXTURE_1_FIRSTNAME,
 				AUTHOR_FIXTURE_1_LASTNAME);
 	}
-
+	
 	@Test
 	@GUITest
 	public void testDeleteAuthorSuccess() {
@@ -151,5 +159,18 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 		window.button(JButtonMatcher.withText("Delete author")).click();
 		assertThat(window.list("authorsList").contents()).noneMatch(
 				e -> e.contains(AUTHOR_FIXTURE_1_LASTNAME));
+	}
+
+	@Test
+	@GUITest
+	public void testDeleteAuthorError() {
+		window.list("authorsList").selectItem(
+				Pattern.compile(".*" + AUTHOR_FIXTURE_1_LASTNAME + ".*"));
+		removeTestAuthorFromDatabase(AUTHOR_FIXTURE_1_ID);
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		assertThat(window.label("errorAuthorLabel").text()).contains(
+				AUTHOR_FIXTURE_1_ID,
+				AUTHOR_FIXTURE_1_FIRSTNAME,
+				AUTHOR_FIXTURE_1_LASTNAME);
 	}
 }
