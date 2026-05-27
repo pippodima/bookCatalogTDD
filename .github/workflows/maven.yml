@@ -26,6 +26,9 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: xvfb-run mvn verify ${{ matrix.additional-maven-args }} --file bookCatalog/pom.xml
+        run: |
+          xvfb-run mvn verify ${{ matrix.additional-maven-args }} \
+            -DrepoToken=${COVERALLS_REPO_TOKEN} \
+            --file bookCatalog/pom.xml
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
