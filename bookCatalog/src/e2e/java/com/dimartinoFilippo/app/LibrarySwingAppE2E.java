@@ -215,7 +215,7 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 		assertThat(window.list("booksList").contents())
 			.noneMatch(e -> e.contains(BOOK_FIXTURE_1_TITLE));
 	}
-
+	
 	@Test
 	@GUITest
 	public void testDeleteBookError() {
@@ -226,7 +226,20 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 		assertThat(window.label("errorBookLabel").text()).contains(
 				BOOK_FIXTURE_1_ISBN,
 				BOOK_FIXTURE_1_TITLE);
-
 	}
+
+	@Test
+	@GUITest
+	public void testDeleteAuthorAlsoDeletesBook() {
+		window.list("authorsList").selectItem(
+				Pattern.compile(".*" + AUTHOR_FIXTURE_1_LASTNAME + ".*"));
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		assertThat(window.list("authorsList").contents()).noneMatch(
+				e -> e.contains(AUTHOR_FIXTURE_1_LASTNAME));
+		assertThat(window.list("booksList").contents())
+			.noneMatch(e -> e.contains(BOOK_FIXTURE_1_TITLE));
+	}
+	
+	
 
 }
