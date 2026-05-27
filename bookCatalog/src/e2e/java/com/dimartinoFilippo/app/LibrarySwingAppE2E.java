@@ -200,5 +200,15 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 			.contains(BOOK_FIXTURE_1_ISBN, BOOK_FIXTURE_1_TITLE);
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteBookSuccess() {
+		window.list("booksList").selectItem(
+				Pattern.compile(".*" + BOOK_FIXTURE_1_TITLE + ".*"));
+		window.button(JButtonMatcher.withText("Delete book")).click();
+		assertThat(window.list("booksList").contents())
+			.noneMatch(e -> e.contains(BOOK_FIXTURE_1_TITLE));
+	}
+
 
 }
