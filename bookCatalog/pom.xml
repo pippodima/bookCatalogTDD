@@ -25,7 +25,7 @@
     <pit-maven-plugin-version>1.19.1</pit-maven-plugin-version>
     <coverall-plugin-version>4.3.0</coverall-plugin-version>
     <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
-
+    <picocli-version>4.7.7</picocli-version>
 
   </properties>
 
@@ -86,6 +86,11 @@
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4j-api-version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>${picocli-version}</version>
     </dependency>
   </dependencies>
   
