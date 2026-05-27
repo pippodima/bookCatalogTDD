@@ -160,7 +160,7 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 		assertThat(window.list("authorsList").contents()).noneMatch(
 				e -> e.contains(AUTHOR_FIXTURE_1_LASTNAME));
 	}
-
+	
 	@Test
 	@GUITest
 	public void testDeleteAuthorError() {
@@ -173,4 +173,19 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 				AUTHOR_FIXTURE_1_FIRSTNAME,
 				AUTHOR_FIXTURE_1_LASTNAME);
 	}
+
+	@Test
+	@GUITest
+	public void testAddBookSuccess() {
+		window.textBox("isbnTextBox").enterText("5678");
+		window.textBox("titleTextBox").enterText("Il Visconte Dimezzato");
+		window.textBox("publicationYearTextBox").enterText("1952");
+		window.comboBox("authorComboBox").selectItem(
+				Pattern.compile(".*" + AUTHOR_FIXTURE_1_LASTNAME + ".*"));
+		window.button(JButtonMatcher.withText("Add book")).click();
+		assertThat(window.list("booksList").contents()).anySatisfy(
+				e -> assertThat(e).contains("5678", "Il Visconte Dimezzato"));
+		}
+	
+	
 }
