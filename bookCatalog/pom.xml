@@ -26,7 +26,7 @@
     <coverall-plugin-version>4.3.0</coverall-plugin-version>
     <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
     <picocli-version>4.7.7</picocli-version>
-
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
 
   <dependencies>

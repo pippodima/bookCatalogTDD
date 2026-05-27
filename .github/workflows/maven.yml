@@ -7,16 +7,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     strategy:
       matrix:
         include:
           - java: 17
-            additional-maven-args: "-Pjacoco,pit-mutation-testing coveralls:report"
+            additional-maven-args: "-Pjacoco coveralls:report sonar:sonar
+              -Dsonar.organization=filippoast
+              -Dsonar.projectKey=filippoast_bookCatalogTDD
+              -Dsonar.host.url=https://sonarcloud.io"
           - java: 21
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
@@ -25,6 +32,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        if: ${{ matrix.java == '17' }}
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Set Maven Additional Goals
+        run: echo "SONARGOAL=sonar:sonar" >> $GITHUB_ENV
+        if: ${{ env.SONAR_TOKEN && matrix.java == '17' }}
+
       - name: Build with Maven
         run: |
           xvfb-run mvn verify ${{ matrix.additional-maven-args }} \
@@ -32,6 +51,7 @@ jobs:
             --file bookCatalog/pom.xml
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Archive PIT report
         uses: actions/upload-artifact@v4
