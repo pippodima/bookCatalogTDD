@@ -3,6 +3,8 @@ package com.dimartinoFilippo.app;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.swing.launcher.ApplicationLauncher.application;
 
+import java.util.regex.Pattern;
+
 import javax.swing.JFrame;
 
 import org.assertj.swing.annotation.GUITest;
@@ -141,4 +143,13 @@ public class LibrarySwingAppE2E extends AssertJSwingJUnitTestCase{
 				AUTHOR_FIXTURE_1_LASTNAME);
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteAuthorSuccess() {
+		window.list("authorsList").selectItem(
+				Pattern.compile(".*" + AUTHOR_FIXTURE_1_LASTNAME + ".*"));
+		window.button(JButtonMatcher.withText("Delete author")).click();
+		assertThat(window.list("authorsList").contents()).noneMatch(
+				e -> e.contains(AUTHOR_FIXTURE_1_LASTNAME));
+	}
 }
