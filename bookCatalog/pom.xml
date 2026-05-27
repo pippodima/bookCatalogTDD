@@ -110,9 +110,11 @@
           <configuration>
             <targetClasses>
               <param>com.dimartinoFilippo.controller*</param>
+              <param>com.dimartinoFilippo.repository.mongo*</param>
             </targetClasses>
             <targetTests>
               <param>com.dimartinoFilippo.controller*</param>
+              <param>com.dimartinoFilippo.repository.mongo*</param>
             </targetTests>
             <mutators>DEFAULTS</mutators>
           </configuration>
@@ -222,9 +224,28 @@
               </execution>
             </executions>
           </plugin>
-
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>pit-mutation-testing</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
 </project>
