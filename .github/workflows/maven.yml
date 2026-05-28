@@ -15,7 +15,7 @@ jobs:
           - java: 17
             additional-maven-args: "-Pjacoco coveralls:report sonar:sonar
               -Dsonar.organization=filippoast
-              -Dsonar.projectKey=filippoast_bookCatalogTDD
+              -Dsonar.projectKey=filippoast_bookcatalogtdd
               -Dsonar.host.url=https://sonarcloud.io"
           - java: 21
 
