@@ -39,26 +39,55 @@
       ${project.build.directory}/failsafe-reports
     </sonar.junit.reportPaths>
 
-    <sonar.issue.ignore.multicriteria>e1,e2,e3,e4</sonar.issue.ignore.multicriteria>
+    <sonar.issue.ignore.multicriteria>e11,e12,e13,e14,e15,e16</sonar.issue.ignore.multicriteria>
 
-    <!-- S2699: no assertions — fires on Swing UI tests -->
-    <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e1.ruleKey>
-    <sonar.issue.ignore.multicriteria.e1.resourceKey>
-      **/LibrarySwingViewTest.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
+    <!-- S2699: no assertions — AssertJ Swing not recognised by Sonar -->
+    <sonar.issue.ignore.multicriteria.e11.ruleKey>
+      java:S2699
+    </sonar.issue.ignore.multicriteria.e11.ruleKey>
+    <sonar.issue.ignore.multicriteria.e11.resourceKey>
+      **/LibrarySwingView*Test.java,**/LibrarySwingView*IT.java
+    </sonar.issue.ignore.multicriteria.e11.resourceKey>
 
-    <!-- S3577: test class naming — fires on E2E class -->
-    <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S3577</sonar.issue.ignore.multicriteria.e2.ruleKey>
-    <sonar.issue.ignore.multicriteria.e2.resourceKey>
-      **/LibrarySwingAppE2E.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
+    <!-- S120: package naming — com.dimartinoFilippo has uppercase -->
+    <sonar.issue.ignore.multicriteria.e12.ruleKey>
+      java:S120
+    </sonar.issue.ignore.multicriteria.e12.ruleKey>
+    <sonar.issue.ignore.multicriteria.e12.resourceKey>
+      **/*.java
+    </sonar.issue.ignore.multicriteria.e12.resourceKey>
 
-    <!-- S120: package naming — fires on com.dimartinoFilippo -->
-    <sonar.issue.ignore.multicriteria.e3.ruleKey>java:S120</sonar.issue.ignore.multicriteria.e3.ruleKey>
-    <sonar.issue.ignore.multicriteria.e3.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.e3.resourceKey>
+    <!-- S3577: test class naming — E2E suffix not standard -->
+    <sonar.issue.ignore.multicriteria.e13.ruleKey>
+      java:S3577
+    </sonar.issue.ignore.multicriteria.e13.ruleKey>
+    <sonar.issue.ignore.multicriteria.e13.resourceKey>
+      **/*E2E.java
+    </sonar.issue.ignore.multicriteria.e13.resourceKey>
 
-    <!-- S3577: test class naming — fires on all E2E files -->
-    <sonar.issue.ignore.multicriteria.e4.ruleKey>java:S3577</sonar.issue.ignore.multicriteria.e4.ruleKey>
-    <sonar.issue.ignore.multicriteria.e4.resourceKey>**/*E2E.java</sonar.issue.ignore.multicriteria.e4.resourceKey>
+    <!-- S1948: serializable — JFrame subclass, never actually serialized -->
+    <sonar.issue.ignore.multicriteria.e14.ruleKey>
+      java:S1948
+    </sonar.issue.ignore.multicriteria.e14.ruleKey>
+    <sonar.issue.ignore.multicriteria.e14.resourceKey>
+      **/LibrarySwingView.java
+    </sonar.issue.ignore.multicriteria.e14.resourceKey>
 
+    <!-- S1104: Swing components must be instance fields -->
+    <sonar.issue.ignore.multicriteria.e15.ruleKey>
+      java:S1104
+    </sonar.issue.ignore.multicriteria.e15.ruleKey>
+    <sonar.issue.ignore.multicriteria.e15.resourceKey>
+      **/LibrarySwingView.java
+    </sonar.issue.ignore.multicriteria.e15.resourceKey>
+
+    <!-- S1450: Swing component fields used across multiple methods -->
+    <sonar.issue.ignore.multicriteria.e16.ruleKey>
+      java:S1450
+    </sonar.issue.ignore.multicriteria.e16.ruleKey>
+    <sonar.issue.ignore.multicriteria.e16.resourceKey>
+      **/LibrarySwingView.java
+    </sonar.issue.ignore.multicriteria.e16.resourceKey>
   </properties>
 
   <dependencies>
