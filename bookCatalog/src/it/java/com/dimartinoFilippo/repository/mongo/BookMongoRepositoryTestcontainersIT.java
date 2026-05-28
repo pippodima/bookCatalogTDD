@@ -119,7 +119,7 @@ public class BookMongoRepositoryTestcontainersIT {
 	@Test
 	public void testITFindBooksByAuthorWhenThereAreNoBooksRelated() {
 		addTestBookToDatabase(TEST_BOOK_1);
-		assertThat(bookRepository.findByAuthor("b2")).isEmpty();;
+		assertThat(bookRepository.findByAuthor("b2")).isEmpty();
 		
 	}
 	
