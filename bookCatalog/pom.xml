@@ -39,15 +39,19 @@
       ${project.build.directory}/failsafe-reports
     </sonar.junit.reportPaths>
 
-    <sonar.issue.ignore.multicriteria>e11,e12,e13,e14,e15,e16</sonar.issue.ignore.multicriteria>
+    <sonar.issue.ignore.multicriteria>e11,e11b,e11c,e12,e13,e14,e15,e16</sonar.issue.ignore.multicriteria>
 
-    <!-- S2699: no assertions — AssertJ Swing not recognised by Sonar -->
-    <sonar.issue.ignore.multicriteria.e11.ruleKey>
-      java:S2699
-    </sonar.issue.ignore.multicriteria.e11.ruleKey>
-    <sonar.issue.ignore.multicriteria.e11.resourceKey>
-      **/*Test.java,**/*IT.java,**/*E2E.java
-    </sonar.issue.ignore.multicriteria.e11.resourceKey>
+    <!-- S2699 — *Test.java -->
+    <sonar.issue.ignore.multicriteria.e11.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e11.ruleKey>
+    <sonar.issue.ignore.multicriteria.e11.resourceKey>**/*Test.java</sonar.issue.ignore.multicriteria.e11.resourceKey>
+
+    <!-- S2699 — *IT.java -->
+    <sonar.issue.ignore.multicriteria.e11b.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e11b.ruleKey>
+    <sonar.issue.ignore.multicriteria.e11b.resourceKey>**/*IT.java</sonar.issue.ignore.multicriteria.e11b.resourceKey>
+
+    <!-- S2699 — *E2E.java -->
+    <sonar.issue.ignore.multicriteria.e11c.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e11c.ruleKey>
+    <sonar.issue.ignore.multicriteria.e11c.resourceKey>**/*E2E.java</sonar.issue.ignore.multicriteria.e11c.resourceKey>
 
     <!-- S120: package naming — com.dimartinoFilippo has uppercase -->
     <sonar.issue.ignore.multicriteria.e12.ruleKey>
