@@ -1,6 +1,5 @@
 package com.dimartinoFilippo.view.swing;
 
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
