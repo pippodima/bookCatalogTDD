@@ -28,6 +28,36 @@
     <picocli-version>4.7.7</picocli-version>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.coverage.exclusions>**/model/**,**/app/**</sonar.coverage.exclusions>
+    <sonar.tests>
+      ${project.basedir}/src/test/java,
+      ${project.basedir}/src/it/java,
+      ${project.basedir}/src/e2e/java
+    </sonar.tests>
+    
+    <sonar.junit.reportPaths>
+      ${project.build.directory}/surefire-reports,
+      ${project.build.directory}/failsafe-reports
+    </sonar.junit.reportPaths>
+
+    <sonar.issue.ignore.multicriteria>e1,e2,e3,e4</sonar.issue.ignore.multicriteria>
+
+    <!-- S2699: no assertions — fires on Swing UI tests -->
+    <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e1.ruleKey>
+    <sonar.issue.ignore.multicriteria.e1.resourceKey>
+      **/LibrarySwingViewTest.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
+
+    <!-- S3577: test class naming — fires on E2E class -->
+    <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S3577</sonar.issue.ignore.multicriteria.e2.ruleKey>
+    <sonar.issue.ignore.multicriteria.e2.resourceKey>
+      **/LibrarySwingAppE2E.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
+
+    <!-- S120: package naming — fires on com.dimartinoFilippo -->
+    <sonar.issue.ignore.multicriteria.e3.ruleKey>java:S120</sonar.issue.ignore.multicriteria.e3.ruleKey>
+    <sonar.issue.ignore.multicriteria.e3.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.e3.resourceKey>
+
+    <!-- S3577: test class naming — fires on all E2E files -->
+    <sonar.issue.ignore.multicriteria.e4.ruleKey>java:S3577</sonar.issue.ignore.multicriteria.e4.ruleKey>
+    <sonar.issue.ignore.multicriteria.e4.resourceKey>**/*E2E.java</sonar.issue.ignore.multicriteria.e4.resourceKey>
 
   </properties>
 
