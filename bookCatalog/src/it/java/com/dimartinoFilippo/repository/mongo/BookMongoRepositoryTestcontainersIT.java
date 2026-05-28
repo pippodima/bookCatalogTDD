@@ -5,7 +5,6 @@ import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.BOOK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.bson.Document;
@@ -106,7 +105,7 @@ public class BookMongoRepositoryTestcontainersIT {
 							d.getInteger("publicationYear")
 							);
 				})
-				.collect(Collectors.toList());
+				.toList();
 	}
 	
 	@Test

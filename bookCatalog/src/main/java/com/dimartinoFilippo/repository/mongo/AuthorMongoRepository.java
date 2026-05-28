@@ -3,7 +3,6 @@ package com.dimartinoFilippo.repository.mongo;
 import static com.dimartinoFilippo.repository.mongo.BookMongoRepository.DB_NAME;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.bson.Document;
@@ -41,7 +40,7 @@ public class AuthorMongoRepository implements AuthorRepository{
 		return StreamSupport.
 				stream(collection.find().spliterator(), false)
 				.map(this::fromDocumentToAuthor)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package com.dimartinoFilippo.repository.mongo;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.bson.Document;
@@ -31,7 +30,7 @@ public class BookMongoRepository implements BookRepository{
 		return StreamSupport.
 				stream(collection.find().spliterator(), false)
 				.map(this::fromDocumentToBook)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	@Override
@@ -59,7 +58,7 @@ public class BookMongoRepository implements BookRepository{
 		return StreamSupport
 				.stream(collection.find(Filters.eq("author.id", authorId)).spliterator(), false)
 				.map(this::fromDocumentToBook)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private Book fromDocumentToBook(Document d) {

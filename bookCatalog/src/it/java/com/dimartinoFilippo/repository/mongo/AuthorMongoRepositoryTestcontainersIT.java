@@ -5,7 +5,6 @@ import static com.dimartinoFilippo.repository.mongo.AuthorMongoRepository.AUTHOR
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.bson.Document;
@@ -96,7 +95,7 @@ public class AuthorMongoRepositoryTestcontainersIT {
 					d.getString("firstName"),
 					d.getString("lastName")
 					))
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 
