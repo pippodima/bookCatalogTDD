@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListDataEvent;
@@ -60,7 +61,7 @@ public class LibrarySwingView extends JFrame implements LibraryView{
 	 */
 	public LibrarySwingView() {
 		setTitle("Library Management");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 500);
 		contentPane = new JPanel(new GridLayout(1, 2, 10, 0));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
