@@ -46,7 +46,7 @@
       java:S2699
     </sonar.issue.ignore.multicriteria.e11.ruleKey>
     <sonar.issue.ignore.multicriteria.e11.resourceKey>
-      **/LibrarySwingView*Test.java,**/LibrarySwingView*IT.java
+      **/*Test.java,**/*IT.java,**/*E2E.java
     </sonar.issue.ignore.multicriteria.e11.resourceKey>
 
     <!-- S120: package naming — com.dimartinoFilippo has uppercase -->
